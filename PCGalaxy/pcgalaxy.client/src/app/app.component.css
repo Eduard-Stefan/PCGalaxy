@@ -1,0 +1,27 @@
+﻿.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.example-toolbar {
+  background-color: rgb(0, 170, 255);
+}
+
+.example-sidenav-container {
+  flex: 1;
+}
+
+.sidenav {
+  width: 25%;
+  max-width: 15rem;
+  background-color: #e0e2ec;
+}
+
+.spacer {
+  flex: 1;
+}

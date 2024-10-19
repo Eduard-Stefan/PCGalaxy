@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCGalaxy.Server", "PCGalaxy.Server\PCGalaxy.Server.csproj", "{94565C9C-920C-4E2F-B35E-B7465857A0ED}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "pcgalaxy.client", "pcgalaxy.client\pcgalaxy.client.esproj", "{B42DB656-F174-43E3-9874-E6344D504A2A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94565C9C-920C-4E2F-B35E-B7465857A0ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94565C9C-920C-4E2F-B35E-B7465857A0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94565C9C-920C-4E2F-B35E-B7465857A0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94565C9C-920C-4E2F-B35E-B7465857A0ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42DB656-F174-43E3-9874-E6344D504A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B42DB656-F174-43E3-9874-E6344D504A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B42DB656-F174-43E3-9874-E6344D504A2A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B42DB656-F174-43E3-9874-E6344D504A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B42DB656-F174-43E3-9874-E6344D504A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42DB656-F174-43E3-9874-E6344D504A2A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D896C74-0ABA-46BF-B58C-7DD23F4EB52E}
+	EndGlobalSection
+EndGlobal

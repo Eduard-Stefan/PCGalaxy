@@ -1,0 +1,6 @@
+@PCGalaxy.Server_HostAddress = http://localhost:5152
+
+GET {{PCGalaxy.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

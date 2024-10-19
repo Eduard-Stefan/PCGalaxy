@@ -1,0 +1,100 @@
+<div class="component-container">
+    <h1>Register</h1>
+    <form #registerForm="ngForm">
+        <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput [(ngModel)]="firstName" name="firstName" required />
+            <mat-error
+                *ngIf="registerForm.controls['firstName']?.invalid && registerForm.controls['firstName']?.touched">
+                First name is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput [(ngModel)]="lastName" name="lastName" required />
+            <mat-error *ngIf="registerForm.controls['lastName']?.invalid && registerForm.controls['lastName']?.touched">
+                Last name is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="email" name="email" required />
+            <mat-error *ngIf="registerForm.controls['email']?.invalid && registerForm.controls['email']?.touched">
+                Email is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Phone number</mat-label>
+            <input matInput [(ngModel)]="phoneNumber" name="phoneNumber" required />
+            <mat-hint>Use international format</mat-hint>
+            <mat-error
+                *ngIf="registerForm.controls['phoneNumber']?.invalid && registerForm.controls['phoneNumber']?.touched">
+                Phone number is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput [(ngModel)]="password" name="password" required />
+            <mat-error *ngIf="registerForm.controls['password']?.invalid && registerForm.controls['password']?.touched">
+                Password is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Confirm password</mat-label>
+            <input matInput [(ngModel)]="confirmPassword" name="confirmPassword" required />
+            <mat-error
+                *ngIf="registerForm.controls['confirmPassword']?.invalid && registerForm.controls['confirmPassword']?.touched">
+                Password confirmation is required
+            </mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="isFieldWhitespace(firstName)">
+            First name cannot be whitespace
+        </mat-error>
+        <mat-error *ngIf="isFieldTooLong(firstName, 256)">
+            First name cannot exceed 256 characters
+        </mat-error>
+        <mat-error *ngIf="isFieldWhitespace(lastName)">
+            Last name cannot be whitespace
+        </mat-error>
+        <mat-error *ngIf="isFieldTooLong(lastName, 256)">
+            Last name cannot exceed 256 characters
+        </mat-error>
+        <mat-error *ngIf="isEmailInvalid(email)">
+            Email is invalid
+        </mat-error>
+        <mat-error *ngIf="isPhoneNumberInvalid(phoneNumber)">
+            Phone number is invalid
+        </mat-error>
+        <mat-error *ngIf="!isPasswordLongEnough(password)">
+            Password must be at least 6 characters
+        </mat-error>
+        <mat-error *ngIf="!hasNonAlphanumericCharacter(password)">
+            Password must have at least one non alphanumeric character
+        </mat-error>
+        <mat-error *ngIf="!hasDigit(password)">
+            Password must have at least one digit ('0'-'9')
+        </mat-error>
+        <mat-error *ngIf="!hasLowercaseLetter(password)">
+            Password must have at least one lowercase ('a'-'z')
+        </mat-error>
+        <mat-error *ngIf="!hasUppercaseLetter(password)">
+            Password must have at least one uppercase ('A'-'Z')
+        </mat-error>
+        <mat-error *ngIf="isPasswordMismatch(password, confirmPassword)">
+            Passwords do not match
+        </mat-error>
+    </form>
+    <button mat-raised-button [disabled]="registerForm.invalid 
+        || isFieldWhitespace(firstName) 
+        || isFieldTooLong(firstName, 256) 
+        || isFieldWhitespace(lastName) 
+        || isFieldTooLong(lastName, 256) 
+        || isEmailInvalid(email) 
+        || isPhoneNumberInvalid(phoneNumber)
+        || !isPasswordLongEnough(password)
+        || !hasNonAlphanumericCharacter(password)
+        || !hasDigit(password)
+        || !hasLowercaseLetter(password)
+        || !hasUppercaseLetter(password)
+        || isPasswordMismatch(password, confirmPassword)" (click)="onSubmit()">Submit</button>
+</div>

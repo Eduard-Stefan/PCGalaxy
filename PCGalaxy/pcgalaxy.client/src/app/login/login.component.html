@@ -1,0 +1,21 @@
+<div class="component-container">
+    <h1>Login</h1>
+    <form #loginForm="ngForm">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="email" name="email" required />
+            <mat-error *ngIf="loginForm.controls['email']?.invalid && loginForm.controls['email']?.touched">
+                Email is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput [(ngModel)]="password" name="password" required />
+            <mat-error *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched">
+                Password is required
+            </mat-error>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="rememberMe" name="rememberMe">Remember me?</mat-checkbox>
+    </form>
+    <button mat-raised-button [disabled]="loginForm.invalid" (click)="onSubmit()">Submit</button>
+</div>

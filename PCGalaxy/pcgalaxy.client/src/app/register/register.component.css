@@ -1,0 +1,29 @@
+h1 {
+  text-align: center;
+  font-weight: normal;
+  margin-bottom: 3rem;
+}
+
+.component-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-form-field {
+  margin-bottom: 1rem;
+  width: 20rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+button {
+  margin-top: 1rem;
+}
