@@ -51,13 +51,13 @@ namespace PCGalaxy.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "28dfc43e-0ca3-477e-b42f-d1d4c2f0b421",
+                            Id = "ca1c9c88-f694-4e71-9027-f8763a879da7",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "c9211c19-26dc-421b-805a-3be4164ccd81",
+                            Id = "460a1cdf-5ed6-4d78-95e3-ab85fe2ce26b",
                             Name = "user",
                             NormalizedName = "user"
                         });
@@ -173,16 +173,104 @@ namespace PCGalaxy.Server.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("PCGalaxy.Server.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Motherboard"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "CPU"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "GPU"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "RAM"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Storage"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Power Supply"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "PC Case"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Cooler"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Fan"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Monitor"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Keyboard"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Mouse"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Mouse Pad"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Headset"
+                        });
+                });
+
             modelBuilder.Entity("PCGalaxy.Server.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("DeliveryMethod")
                         .IsRequired()
@@ -217,6 +305,8 @@ namespace PCGalaxy.Server.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -362,6 +452,17 @@ namespace PCGalaxy.Server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PCGalaxy.Server.Models.Product", b =>
+                {
+                    b.HasOne("PCGalaxy.Server.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("ProductUser", b =>
                 {
                     b.HasOne("PCGalaxy.Server.Models.Product", null)
@@ -375,6 +476,11 @@ namespace PCGalaxy.Server.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PCGalaxy.Server.Models.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ProductsService } from '../../services/products.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Product } from '../../models/product.model';
+import { Category } from '../../models/category.model';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.css'],
 })
-export class CreateProductComponent {
+export class CreateProductComponent implements OnInit {
   name: string = '';
   description: string = '';
   specifications: string = '';
@@ -17,12 +19,29 @@ export class CreateProductComponent {
   stock: number = 0;
   supplier: string = '';
   deliveryMethod: string = '';
-  category: string = '';
+  category: Category | null = null;
+  categories: Category[] = [];
 
   constructor(
     private productsService: ProductsService,
+    private categoriesService: CategoriesService,
     public dialogRef: MatDialogRef<CreateProductComponent>
   ) {}
+
+  ngOnInit(): void {
+    this.getCategories();
+  }
+
+  getCategories(): void {
+    this.categoriesService.getCategories().subscribe({
+      next: (result: Category[]) => {
+        this.categories = result;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
 
   onCancel(): void {
     this.dialogRef.close();
@@ -35,7 +54,6 @@ export class CreateProductComponent {
     const trimmedSpecifications: string = this.specifications.trim().replace(/\s+/g, ' ');
     const trimmedSupplier: string = this.supplier.trim().replace(/\s+/g, ' ');
     const trimmedDeliveryMethod: string = this.deliveryMethod.trim().replace(/\s+/g, ' ');
-    const trimmedCategory: string = this.category.trim().replace(/\s+/g, ' ');
     const product: Product = {
       id: productId,
       name: trimmedName,
@@ -45,7 +63,7 @@ export class CreateProductComponent {
       stock: this.stock,
       supplier: trimmedSupplier,
       deliveryMethod: trimmedDeliveryMethod,
-      category: trimmedCategory,
+      category: this.category!
     };
 
     this.productsService.createProduct(product).subscribe({
@@ -78,10 +96,6 @@ export class CreateProductComponent {
     return this.deliveryMethod.length > 0 && this.deliveryMethod.trim().length === 0;
   }
 
-  isCategoryWhitespace(): boolean {
-    return this.category.length > 0 && this.category.trim().length === 0;
-  }
-
   isNameTooLong(): boolean {
     return this.name.length > 256;
   }
@@ -100,10 +114,6 @@ export class CreateProductComponent {
 
   isDeliveryMethodTooLong(): boolean {
     return this.deliveryMethod.length > 256;
-  }
-
-  isCategoryTooLong(): boolean {
-    return this.category.length > 256;
   }
 
   isPriceTooLarge(): boolean {

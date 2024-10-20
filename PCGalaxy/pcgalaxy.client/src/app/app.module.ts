@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
@@ -30,6 +30,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,9 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
     MatToolbarModule,
     MatListModule,
     AppRoutingModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi())

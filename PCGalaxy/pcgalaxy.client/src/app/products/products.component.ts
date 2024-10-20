@@ -41,7 +41,7 @@ export class ProductsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.filterPredicate = (data: Product, filter: string) => {
-          const dataStr = data.name.toLowerCase() + data.description.toLowerCase() + data.specifications.toLowerCase() + data.price.toString() + data.stock.toString() + data.supplier.toLowerCase() + data.deliveryMethod.toLowerCase() + data.category.toLowerCase();
+          const dataStr = data.name.toLowerCase() + data.description.toLowerCase() + data.specifications.toLowerCase() + data.price.toString() + data.stock.toString() + data.supplier.toLowerCase() + data.deliveryMethod.toLowerCase() + data.category.name!.toLowerCase();
           return dataStr.includes(filter);
         };
       },

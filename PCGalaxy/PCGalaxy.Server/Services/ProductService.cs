@@ -11,17 +11,21 @@ namespace PCGalaxy.Server.Services
 		public async Task<List<ProductDto>> GetAllAsync()
 		{
 			return await unitOfWork.ProductRepository.GetAllAsync()
-				.Select(f => new ProductDto
+				.Select(p => new ProductDto
 				{
-					Id = f.Id,
-					Name = f.Name,
-					Description = f.Description,
-					Specifications = f.Specifications,
-					Price = f.Price,
-					Stock = f.Stock,
-					Supplier = f.Supplier,
-					DeliveryMethod = f.DeliveryMethod,
-					Category = f.Category
+					Id = p.Id,
+					Name = p.Name,
+					Description = p.Description,
+					Specifications = p.Specifications,
+					Price = p.Price,
+					Stock = p.Stock,
+					Supplier = p.Supplier,
+					DeliveryMethod = p.DeliveryMethod,
+					Category = new CategoryDto
+					{
+						Id = p.Category!.Id,
+						Name = p.Category.Name
+					}
 				})
 				.ToListAsync();
 		}
@@ -42,7 +46,11 @@ namespace PCGalaxy.Server.Services
 					Stock = product.Stock,
 					Supplier = product.Supplier,
 					DeliveryMethod = product.DeliveryMethod,
-					Category = product.Category
+					Category = new CategoryDto
+					{
+						Id = product.CategoryId,
+						Name = null
+					}
 				};
 		}
 
@@ -58,7 +66,7 @@ namespace PCGalaxy.Server.Services
 				Stock = productDto.Stock,
 				Supplier = productDto.Supplier,
 				DeliveryMethod = productDto.DeliveryMethod,
-				Category = productDto.Category
+				CategoryId = productDto.Category.Id
 			};
 			await unitOfWork.ProductRepository.CreateAsync(product);
 		}
@@ -75,7 +83,7 @@ namespace PCGalaxy.Server.Services
 				Stock = productDto.Stock,
 				Supplier = productDto.Supplier,
 				DeliveryMethod = productDto.DeliveryMethod,
-				Category = productDto.Category
+				CategoryId = productDto.Category.Id
 			};
 			await unitOfWork.ProductRepository.UpdateAsync(product);
 		}

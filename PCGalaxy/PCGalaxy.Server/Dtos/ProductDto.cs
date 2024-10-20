@@ -39,9 +39,6 @@ namespace PCGalaxy.Server.Dtos
 		[MaxLength(256, ErrorMessage = "The delivery method cannot exceed 256 characters.")]
 		public required string DeliveryMethod { get; set; }
 
-		[Required(ErrorMessage = "The category is required.")]
-		[MinLength(1, ErrorMessage = "The category cannot be an empty string.")]
-		[MaxLength(256, ErrorMessage = "The category cannot exceed 256 characters.")]
-		public required string Category { get; set; }
+		public required CategoryDto Category { get; set; }
 	}
 }

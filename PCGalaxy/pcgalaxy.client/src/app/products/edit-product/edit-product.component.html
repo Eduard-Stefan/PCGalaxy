@@ -4,16 +4,14 @@
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput [(ngModel)]="name" name="name" required />
-      <mat-error
-        *ngIf="productForm.controls['name']?.invalid && productForm.controls['name']?.touched">
+      <mat-error *ngIf="productForm.controls['name']?.invalid && productForm.controls['name']?.touched">
         Name is required
       </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Description</mat-label>
       <textarea matInput [(ngModel)]="description" name="description" required></textarea>
-      <mat-error
-        *ngIf="productForm.controls['description']?.invalid && productForm.controls['description']?.touched">
+      <mat-error *ngIf="productForm.controls['description']?.invalid && productForm.controls['description']?.touched">
         Description is required
       </mat-error>
     </mat-form-field>
@@ -28,24 +26,21 @@
     <mat-form-field>
       <mat-label>Price</mat-label>
       <input matInput type="number" step="0.01" min="0" [(ngModel)]="price" name="price" required />
-      <mat-error
-        *ngIf="productForm.controls['price']?.invalid && productForm.controls['price']?.touched">
+      <mat-error *ngIf="productForm.controls['price']?.invalid && productForm.controls['price']?.touched">
         Price is required and must be non-negative.
       </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Stock</mat-label>
       <input matInput type="number" min="0" [(ngModel)]="stock" name="stock" required />
-      <mat-error
-        *ngIf="productForm.controls['stock']?.invalid && productForm.controls['stock']?.touched">
+      <mat-error *ngIf="productForm.controls['stock']?.invalid && productForm.controls['stock']?.touched">
         Stock is required and must be non-negative.
       </mat-error>
-    </mat-form-field>    
+    </mat-form-field>
     <mat-form-field>
       <mat-label>Supplier</mat-label>
       <input matInput [(ngModel)]="supplier" name="supplier" required />
-      <mat-error
-        *ngIf="productForm.controls['supplier']?.invalid && productForm.controls['supplier']?.touched">
+      <mat-error *ngIf="productForm.controls['supplier']?.invalid && productForm.controls['supplier']?.touched">
         Supplier is required
       </mat-error>
     </mat-form-field>
@@ -59,7 +54,9 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Category</mat-label>
-      <input matInput [(ngModel)]="category" name="category" required />
+      <mat-select [(ngModel)]="category" name="category" required>
+        <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
+      </mat-select>
       <mat-error
         *ngIf="productForm.controls['category']?.invalid && productForm.controls['category']?.touched">
         Category is required
@@ -80,9 +77,6 @@
     <mat-error *ngIf="isDeliveryMethodWhitespace()">
       Delivery Method cannot be whitespace
     </mat-error>
-    <mat-error *ngIf="isCategoryWhitespace()">
-      Category cannot be whitespace
-    </mat-error>
     <mat-error *ngIf="isNameTooLong()">
       Name cannot exceed 256 characters
     </mat-error>
@@ -97,9 +91,6 @@
     </mat-error>
     <mat-error *ngIf="isDeliveryMethodTooLong()">
       Delivery Method cannot exceed 256 characters
-    </mat-error>
-    <mat-error *ngIf="isCategoryTooLong()">
-      Category cannot exceed 256 characters
     </mat-error>
     <mat-error *ngIf="isPriceTooLarge()">
       Price cannot exceed 1000000
@@ -120,13 +111,11 @@
   isSpecificationsWhitespace() ||
   isSupplierWhitespace() ||
   isDeliveryMethodWhitespace() ||
-  isCategoryWhitespace() ||
   isNameTooLong() ||
   isDescriptionTooLong() ||
   isSpecificationsTooLong() ||
   isSupplierTooLong() ||
   isDeliveryMethodTooLong() ||
-  isCategoryTooLong() ||
   isPriceTooLarge() ||
   isStockTooLarge() ||
   !isStockInteger()" (click)="onSave()">Save</button>

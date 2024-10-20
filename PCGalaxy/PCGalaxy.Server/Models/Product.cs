@@ -39,11 +39,8 @@ namespace PCGalaxy.Server.Models
 		[MaxLength(256, ErrorMessage = "The delivery method cannot exceed 256 characters.")]
 		public required string DeliveryMethod { get; set; }
 
-		[Required(ErrorMessage = "The category is required.")]
-		[MinLength(1, ErrorMessage = "The category cannot be an empty string.")]
-		[MaxLength(256, ErrorMessage = "The category cannot exceed 256 characters.")]
-		public required string Category { get; set; }
-
+		public int CategoryId { get; set; }
+		public Category? Category { get; set; }
 		public ICollection<User>? Users { get; set; }
 	}
 }

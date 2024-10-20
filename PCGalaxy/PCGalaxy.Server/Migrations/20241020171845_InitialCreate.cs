@@ -55,22 +55,16 @@ namespace PCGalaxy.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Specifications = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(9,2)", precision: 9, scale: 2, nullable: false),
-                    Stock = table.Column<int>(type: "int", nullable: false),
-                    Supplier = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    DeliveryMethod = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,6 +174,31 @@ namespace PCGalaxy.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Specifications = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(9,2)", precision: 9, scale: 2, nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    Supplier = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    DeliveryMethod = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserProducts",
                 columns: table => new
                 {
@@ -208,8 +227,29 @@ namespace PCGalaxy.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "28dfc43e-0ca3-477e-b42f-d1d4c2f0b421", null, "admin", "admin" },
-                    { "c9211c19-26dc-421b-805a-3be4164ccd81", null, "user", "user" }
+                    { "460a1cdf-5ed6-4d78-95e3-ab85fe2ce26b", null, "user", "user" },
+                    { "ca1c9c88-f694-4e71-9027-f8763a879da7", null, "admin", "admin" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Motherboard" },
+                    { 2, "CPU" },
+                    { 3, "GPU" },
+                    { 4, "RAM" },
+                    { 5, "Storage" },
+                    { 6, "Power Supply" },
+                    { 7, "PC Case" },
+                    { 8, "Cooler" },
+                    { 9, "Fan" },
+                    { 10, "Monitor" },
+                    { 11, "Keyboard" },
+                    { 12, "Mouse" },
+                    { 13, "Mouse Pad" },
+                    { 14, "Headset" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -252,6 +292,11 @@ namespace PCGalaxy.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserProducts_UsersId",
                 table: "UserProducts",
                 column: "UsersId");
@@ -286,6 +331,9 @@ namespace PCGalaxy.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }
