@@ -6,7 +6,7 @@ using PCGalaxy.Server.Services.Interfaces;
 
 namespace PCGalaxy.Server.Services
 {
-	public class ProductService(IUnitOfWork unitOfWork) : IProductService
+	public class ProductService(IUnitOfWork unitOfWork, IConfiguration configuration) : IProductService
 	{
 		public async Task<List<ProductDto>> GetAllAsync()
 		{
@@ -25,7 +25,8 @@ namespace PCGalaxy.Server.Services
 					{
 						Id = p.Category!.Id,
 						Name = p.Category.Name
-					}
+					},
+					ImageBase64 = Convert.ToBase64String(p.Image)
 				})
 				.ToListAsync();
 		}
@@ -50,7 +51,8 @@ namespace PCGalaxy.Server.Services
 					{
 						Id = product.CategoryId,
 						Name = null
-					}
+					},
+					ImageBase64 = Convert.ToBase64String(product.Image)
 				};
 		}
 
@@ -66,7 +68,8 @@ namespace PCGalaxy.Server.Services
 				Stock = productDto.Stock,
 				Supplier = productDto.Supplier,
 				DeliveryMethod = productDto.DeliveryMethod,
-				CategoryId = productDto.Category.Id
+				CategoryId = productDto.Category.Id,
+				Image = Convert.FromBase64String(productDto.ImageBase64)
 			};
 			await unitOfWork.ProductRepository.CreateAsync(product);
 		}
@@ -83,7 +86,8 @@ namespace PCGalaxy.Server.Services
 				Stock = productDto.Stock,
 				Supplier = productDto.Supplier,
 				DeliveryMethod = productDto.DeliveryMethod,
-				CategoryId = productDto.Category.Id
+				CategoryId = productDto.Category.Id,
+				Image = Convert.FromBase64String(productDto.ImageBase64)
 			};
 			await unitOfWork.ProductRepository.UpdateAsync(product);
 		}

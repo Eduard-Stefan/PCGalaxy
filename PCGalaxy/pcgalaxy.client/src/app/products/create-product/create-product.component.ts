@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Product } from '../../models/product.model';
 import { Category } from '../../models/category.model';
 import { CategoriesService } from '../../services/categories.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-create-product',
@@ -21,6 +22,8 @@ export class CreateProductComponent implements OnInit {
   deliveryMethod: string = '';
   category: Category | null = null;
   categories: Category[] = [];
+  imageBase64: string = '';
+  defaultProductImageBase64: string = environment.defaultProductImageBase64;
 
   constructor(
     private productsService: ProductsService,
@@ -63,7 +66,8 @@ export class CreateProductComponent implements OnInit {
       stock: this.stock,
       supplier: trimmedSupplier,
       deliveryMethod: trimmedDeliveryMethod,
-      category: this.category!
+      category: this.category!,
+      imageBase64: this.imageBase64 || this.defaultProductImageBase64
     };
 
     this.productsService.createProduct(product).subscribe({
@@ -74,6 +78,32 @@ export class CreateProductComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+  
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        const base64ContentArray = base64String.split(',');
+        this.imageBase64 = base64ContentArray.length > 1 ? base64ContentArray[1] : base64String;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  
+  removeImage(): void {
+    this.imageBase64 = '';
+  }
+
+  isNoImage(): boolean {
+    return this.imageBase64.length === 0 || this.imageBase64 === this.defaultProductImageBase64;
+  }
+
+  isImageTooLarge(): boolean {
+    return this.imageBase64.length > 1024 * 1024;
   }
 
   isNameWhitespace(): boolean {

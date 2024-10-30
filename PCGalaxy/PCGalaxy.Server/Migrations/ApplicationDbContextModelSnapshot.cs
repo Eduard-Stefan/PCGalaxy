@@ -51,13 +51,13 @@ namespace PCGalaxy.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ca1c9c88-f694-4e71-9027-f8763a879da7",
+                            Id = "135c5426-3ee1-415b-873a-eca50b885a0f",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "460a1cdf-5ed6-4d78-95e3-ab85fe2ce26b",
+                            Id = "7a185eb1-9daa-4010-8869-1c885506afe4",
                             Name = "user",
                             NormalizedName = "user"
                         });
@@ -281,6 +281,10 @@ namespace PCGalaxy.Server.Migrations
                         .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
+
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

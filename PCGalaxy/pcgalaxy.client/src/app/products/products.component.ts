@@ -17,7 +17,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class ProductsComponent implements OnInit {
   public products: Product[] = [];
-  public displayedColumns: string[] = ['name', 'description', 'specifications', 'price', 'stock', 'supplier', 'deliveryMethod', 'category', 'actions'];
+  public displayedColumns: string[] = ['name', 'description', 'specifications', 'price', 'stock', 'supplier', 'deliveryMethod', 'category', 'image', 'actions'];
   public dataSource!: MatTableDataSource<Product>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

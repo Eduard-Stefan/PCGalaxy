@@ -23,3 +23,10 @@ h1 {
 .component-container {
     padding: 1rem;
 }
+
+.image {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    margin-top: 5.6px;
+}

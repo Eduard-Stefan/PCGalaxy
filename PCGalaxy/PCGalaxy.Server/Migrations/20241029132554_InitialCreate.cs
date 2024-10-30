@@ -185,7 +185,8 @@ namespace PCGalaxy.Server.Migrations
                     Stock = table.Column<int>(type: "int", nullable: false),
                     Supplier = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     DeliveryMethod = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -227,8 +228,8 @@ namespace PCGalaxy.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "460a1cdf-5ed6-4d78-95e3-ab85fe2ce26b", null, "user", "user" },
-                    { "ca1c9c88-f694-4e71-9027-f8763a879da7", null, "admin", "admin" }
+                    { "135c5426-3ee1-415b-873a-eca50b885a0f", null, "admin", "admin" },
+                    { "7a185eb1-9daa-4010-8869-1c885506afe4", null, "user", "user" }
                 });
 
             migrationBuilder.InsertData(

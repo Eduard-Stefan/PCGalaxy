@@ -10,4 +10,5 @@ export interface Product {
   supplier: string;
   deliveryMethod: string;
   category: Category;
+  imageBase64: string;
 }

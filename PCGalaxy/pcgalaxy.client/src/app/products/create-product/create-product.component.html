@@ -62,6 +62,24 @@
         Category is required
       </mat-error>
     </mat-form-field>
+    <div class="image-upload-container">
+      <div class="image-buttons">
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden #fileInput />
+        <button mat-button class="upload-button" (click)="fileInput.click()">Upload</button>
+        <button mat-button class="remove-button" [disabled]="isNoImage()" (click)="removeImage()">Remove</button>
+      </div>
+      <div class="image-preview">
+        <ng-container *ngIf="imageBase64; else placeholderImage">
+          <img [src]="'data:image/png;base64,' + imageBase64" class="preview-img"/>
+        </ng-container>
+        <ng-template #placeholderImage>
+          <img [src]="'data:image/png;base64,' + defaultProductImageBase64" class="preview-img"/>
+        </ng-template>
+      </div>
+      <mat-error *ngIf="isImageTooLarge()">
+        Image size must be less than 1 MB.
+      </mat-error>
+    </div>
     <mat-error *ngIf="isNameWhitespace()">
       Name cannot be whitespace
     </mat-error>
@@ -104,8 +122,8 @@
   </form>
 </div>
 <div mat-dialog-actions class="center-buttons">
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button [disabled]="productForm.invalid || 
+  <button mat-button class="form-button" (click)="onCancel()">Cancel</button>
+  <button mat-button class="form-button" [disabled]="productForm.invalid || 
   isNameWhitespace() || 
   isDescriptionWhitespace() ||
   isSpecificationsWhitespace() ||
@@ -118,5 +136,6 @@
   isDeliveryMethodTooLong() ||
   isPriceTooLarge() ||
   isStockTooLarge() ||
-  !isStockInteger()" (click)="onSave()">Save</button>
+  !isStockInteger() ||
+  isImageTooLarge()" (click)="onSave()">Save</button>
 </div>

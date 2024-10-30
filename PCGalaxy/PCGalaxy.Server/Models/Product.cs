@@ -41,6 +41,7 @@ namespace PCGalaxy.Server.Models
 
 		public int CategoryId { get; set; }
 		public Category? Category { get; set; }
+		public required byte[] Image { get; set; }
 		public ICollection<User>? Users { get; set; }
 	}
 }
