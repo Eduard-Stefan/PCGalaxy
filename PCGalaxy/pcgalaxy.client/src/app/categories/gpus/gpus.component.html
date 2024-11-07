@@ -1,0 +1,23 @@
+<div class="component-container">
+  <h1>GPUs</h1>
+  <div class="product-container">
+    <div class="product-card" *ngFor="let product of products">
+      <img
+        [src]="'data:image/jpeg;base64,' + product.imageBase64"
+        class="product-image"
+      />
+      <div class="product-details">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.price | currency }}</p>
+        <div class="button-container">
+          <button mat-icon-button (click)="addToCart(product)">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+          <button mat-icon-button (click)="addToWishlist(product)">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,13 @@ namespace PCGalaxy.Server.Controllers
 			return Ok(products);
 		}
 
+		[HttpGet("category/{categoryId:int}")]
+		public async Task<IActionResult> GetAllByCategoryAsync(int categoryId)
+		{
+			var products = await productService.GetAllByCategoryAsync(categoryId);
+			return Ok(products);
+		}
+
 		[HttpGet("{id:guid}")]
 		public async Task<IActionResult> GetByIdAsync(Guid id)
 		{

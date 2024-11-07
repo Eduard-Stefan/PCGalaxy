@@ -31,6 +31,29 @@ namespace PCGalaxy.Server.Services
 				.ToListAsync();
 		}
 
+		public async Task<List<ProductDto>> GetAllByCategoryAsync(int categoryId)
+		{
+			return await unitOfWork.ProductRepository.GetByConditionAsync(p => p.CategoryId == categoryId)
+				.Select(p => new ProductDto
+				{
+					Id = p.Id,
+					Name = p.Name,
+					Description = p.Description,
+					Specifications = p.Specifications,
+					Price = p.Price,
+					Stock = p.Stock,
+					Supplier = p.Supplier,
+					DeliveryMethod = p.DeliveryMethod,
+					Category = new CategoryDto
+					{
+						Id = p.Category!.Id,
+						Name = p.Category.Name
+					},
+					ImageBase64 = Convert.ToBase64String(p.Image)
+				})
+				.ToListAsync();
+		}
+
 		public async Task<ProductDto?> GetByIdAsync(Guid id)
 		{
 			var product = await unitOfWork.ProductRepository.GetByConditionAsync(f => f.Id == id)

@@ -31,6 +31,20 @@ import { LoginComponent } from './login/login.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MotherboardsComponent } from './categories/motherboards/motherboards.component';
+import { CpusComponent } from './categories/cpus/cpus.component';
+import { GpusComponent } from './categories/gpus/gpus.component';
+import { RamComponent } from './categories/ram/ram.component';
+import { StoragesComponent } from './categories/storages/storages.component';
+import { PowerSuppliesComponent } from './categories/power-supplies/power-supplies.component';
+import { PcCasesComponent } from './categories/pc-cases/pc-cases.component';
+import { CoolersComponent } from './categories/coolers/coolers.component';
+import { FansComponent } from './categories/fans/fans.component';
+import { MonitorsComponent } from './categories/monitors/monitors.component';
+import { KeyboardsComponent } from './categories/keyboards/keyboards.component';
+import { MiceComponent } from './categories/mice/mice.component';
+import { MousePadsComponent } from './categories/mouse-pads/mouse-pads.component';
+import { HeadsetsComponent } from './categories/headsets/headsets.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +56,21 @@ import { MatSelectModule } from '@angular/material/select';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    NotAuthorizedComponent
+    NotAuthorizedComponent,
+    MotherboardsComponent,
+    CpusComponent,
+    GpusComponent,
+    RamComponent,
+    StoragesComponent,
+    PowerSuppliesComponent,
+    PcCasesComponent,
+    CoolersComponent,
+    FansComponent,
+    MonitorsComponent,
+    KeyboardsComponent,
+    MiceComponent,
+    MousePadsComponent,
+    HeadsetsComponent
   ],
   imports: [
     BrowserModule,
