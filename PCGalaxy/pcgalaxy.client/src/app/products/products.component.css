@@ -30,3 +30,10 @@ h1 {
     border-radius: 0.5rem;
     margin-top: 5.6px;
 }
+
+.mat-column-name {
+    max-width: 200px; 
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

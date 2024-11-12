@@ -46,6 +46,7 @@ import { MiceComponent } from './categories/mice/mice.component';
 import { MousePadsComponent } from './categories/mouse-pads/mouse-pads.component';
 import { HeadsetsComponent } from './categories/headsets/headsets.component';
 import { SearchComponent } from './search/search.component';
+import { ViewProductComponent } from './view-product/view-product.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { SearchComponent } from './search/search.component';
     MiceComponent,
     MousePadsComponent,
     HeadsetsComponent,
-    SearchComponent
+    SearchComponent,
+    ViewProductComponent
   ],
   imports: [
     BrowserModule,

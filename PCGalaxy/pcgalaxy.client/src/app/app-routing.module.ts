@@ -21,10 +21,12 @@ import { MiceComponent } from './categories/mice/mice.component';
 import { MousePadsComponent } from './categories/mouse-pads/mouse-pads.component';
 import { HeadsetsComponent } from './categories/headsets/headsets.component';
 import { SearchComponent } from './search/search.component';
+import { ViewProductComponent } from './view-product/view-product.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'admin/products', component: ProductsComponent, canActivate: [AdminGuard] },
+  { path: 'product/:id', component: ViewProductComponent },
   { path: 'motherboards', component: MotherboardsComponent },
   { path: 'cpus', component: CpusComponent },
   { path: 'gpus', component: GpusComponent },

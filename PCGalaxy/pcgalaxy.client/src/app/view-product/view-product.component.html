@@ -1,0 +1,25 @@
+<mat-icon (click)="goBack()" style="cursor: pointer;">arrow_back</mat-icon>
+<div *ngIf="product" class="product-details">
+    <h2>{{ product.name }}</h2>
+  
+    <div class="product-image">
+      <img [src]="'data:image/jpeg;base64,' + product.imageBase64" alt="{{ product.name }}" />
+    </div>
+  
+    <div class="product-info">
+         <p><strong>Category:</strong> {{ product.category.name }}</p>
+         <p><strong>Description:</strong> {{ product.description }}</p>
+         <p><strong>Specifications:</strong> {{ product.specifications }}</p>
+         <p><strong>Supplier:</strong> {{ product.supplier }}</p>
+         <p><strong>Delivery Method:</strong> {{ product.deliveryMethod }}</p>
+         <p><strong>Price:</strong> ${{ product.price }}</p>
+         <p><strong>Stock:</strong> {{ product.stock }}</p>
+         <button mat-icon-button (click)="addToCart(product)">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+          <button mat-icon-button (click)="addToWishlist(product)">
+            <mat-icon>favorite</mat-icon>
+          </button>
+    </div>
+  </div>
+  
