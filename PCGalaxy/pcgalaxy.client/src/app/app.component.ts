@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from './services/account.service';
 import { User } from './models/user.model';
 import { Router } from '@angular/router';
+import { ProductsService } from './services/products.service';
+import { Product } from './models/product.model';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,10 @@ export class AppComponent implements OnInit {
   static signedIn: boolean = false;
   static isAdmin: boolean = false;
 
-  constructor(public accountService: AccountService, private router: Router) {
+  searchTerm: string = '';
+  searchResults: Product[] = [];
+
+  constructor(public accountService: AccountService, private router: Router, private productsService: ProductsService) {
     this.isSignedIn();
     this.getCurrentUser();
   }
@@ -94,5 +99,11 @@ export class AppComponent implements OnInit {
         this.isAdmin = false;
       },
     });
+  }
+
+  onSearch() {
+    if (this.searchTerm.trim()) {
+      this.router.navigate(['/search'], { queryParams: { term: this.searchTerm } });
+    }
   }
 }

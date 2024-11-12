@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PCGalaxy.Server.Dtos;
+using PCGalaxy.Server.Services;
 using PCGalaxy.Server.Services.Interfaces;
 
 namespace PCGalaxy.Server.Controllers
@@ -36,7 +37,14 @@ namespace PCGalaxy.Server.Controllers
 			return Ok(product);
 		}
 
-		[Authorize(Roles = "admin")]
+		[HttpGet("search")]
+
+        public async Task<ActionResult<List<ProductDto>>> Search([FromQuery] string term)
+        {
+            var products = await productService.SearchAsync(term);
+            return Ok(products);
+        }
+
 		[HttpPost]
 		public async Task<IActionResult> CreateAsync([FromBody, Required] ProductDto product)
 		{

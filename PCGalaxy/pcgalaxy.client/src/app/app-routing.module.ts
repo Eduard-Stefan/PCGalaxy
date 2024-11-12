@@ -20,6 +20,7 @@ import { KeyboardsComponent } from './categories/keyboards/keyboards.component';
 import { MiceComponent } from './categories/mice/mice.component';
 import { MousePadsComponent } from './categories/mouse-pads/mouse-pads.component';
 import { HeadsetsComponent } from './categories/headsets/headsets.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -40,7 +41,8 @@ const routes: Routes = [
   { path: 'headsets', component: HeadsetsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'not-authorized', component: NotAuthorizedComponent }
+  { path: 'not-authorized', component: NotAuthorizedComponent },
+  { path: 'search', component: SearchComponent }
 ];
 
 @NgModule({

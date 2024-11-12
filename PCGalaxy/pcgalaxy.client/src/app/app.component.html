@@ -1,38 +1,49 @@
-﻿<div class="example-container">
-    <mat-toolbar class="example-toolbar">
-        <button mat-icon-button (click)="sidenav.toggle()">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <span>PCGalaxy</span>
-        <span class="spacer"></span>
-        <span *ngIf="signedIn">Welcome, {{ currentUser?.firstName }}</span>
-        <button mat-button *ngIf="!signedIn" routerLink="/register">Register</button>
-        <button mat-button *ngIf="!signedIn" routerLink="/login">Login</button>
-        <button mat-button *ngIf="signedIn" (click)="logout()">Logout</button>
-    </mat-toolbar>
-    <mat-sidenav-container class="example-sidenav-container">
-        <mat-sidenav class="sidenav" #sidenav mode="side" opened>
-            <mat-nav-list>
-                <a mat-list-item routerLink="/">Home</a>
-                <a *ngIf="isAdmin" mat-list-item routerLink="admin/products">Products</a>
-                <a mat-list-item routerLink="/motherboards">Motherboards</a>
-                <a mat-list-item routerLink="/cpus">CPUs</a>
-                <a mat-list-item routerLink="/gpus">GPUs</a>
-                <a mat-list-item routerLink="/ram">RAM</a>
-                <a mat-list-item routerLink="/storages">Storages</a>
-                <a mat-list-item routerLink="/power-supplies">Power Supplies</a>
-                <a mat-list-item routerLink="/pc-cases">PC Cases</a>
-                <a mat-list-item routerLink="/coolers">Coolers</a>
-                <a mat-list-item routerLink="/fans">Fans</a>
-                <a mat-list-item routerLink="/monitors">Monitors</a>
-                <a mat-list-item routerLink="/keyboards">Keyboards</a>
-                <a mat-list-item routerLink="/mice">Mice</a>
-                <a mat-list-item routerLink="/mouse-pads">Mouse Pads</a>
-                <a mat-list-item routerLink="/headsets">Headsets</a>
-            </mat-nav-list>
-        </mat-sidenav>
-        <mat-sidenav-content class="sidenav-content">
-            <router-outlet></router-outlet>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+<div class="example-container">
+  <mat-toolbar class="example-toolbar">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>PCGalaxy</span>
+    <span class="spacer"></span>
+    <div class="search-container">
+      <button mat-icon-button class="search-button" (click)="onSearch()" [routerLink]="['/search']" [queryParams]="{ term: searchTerm }">
+        <mat-icon>search</mat-icon>
+      </button>
+      <div class="search-wrapper">
+        <mat-form-field class="search-bar" appearance="outline">
+          <input matInput placeholder="Search..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+        </mat-form-field>
+      </div>
+    </div>
+    <span *ngIf="signedIn">Welcome, {{ currentUser?.firstName }}</span>
+    <button mat-button *ngIf="!signedIn" routerLink="/register">Register</button>
+    <button mat-button *ngIf="!signedIn" routerLink="/login">Login</button>
+    <button mat-button *ngIf="signedIn" (click)="logout()">Logout</button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav class="sidenav" #sidenav mode="side" opened>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/">Home</a>
+        <a *ngIf="isAdmin" mat-list-item routerLink="admin/products">Products</a>
+        <a mat-list-item routerLink="/motherboards">Motherboards</a>
+        <a mat-list-item routerLink="/cpus">CPUs</a>
+        <a mat-list-item routerLink="/gpus">GPUs</a>
+        <a mat-list-item routerLink="/ram">RAM</a>
+        <a mat-list-item routerLink="/storages">Storages</a>
+        <a mat-list-item routerLink="/power-supplies">Power Supplies</a>
+        <a mat-list-item routerLink="/pc-cases">PC Cases</a>
+        <a mat-list-item routerLink="/coolers">Coolers</a>
+        <a mat-list-item routerLink="/fans">Fans</a>
+        <a mat-list-item routerLink="/monitors">Monitors</a>
+        <a mat-list-item routerLink="/keyboards">Keyboards</a>
+        <a mat-list-item routerLink="/mice">Mice</a>
+        <a mat-list-item routerLink="/mouse-pads">Mouse Pads</a>
+        <a mat-list-item routerLink="/headsets">Headsets</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PCGalaxy.Server.Dtos;
 using PCGalaxy.Server.Models;
+using PCGalaxy.Server.Repositories;
 using PCGalaxy.Server.Repositories.Interfaces;
 using PCGalaxy.Server.Services.Interfaces;
 
 namespace PCGalaxy.Server.Services
 {
-	public class ProductService(IUnitOfWork unitOfWork, IConfiguration configuration) : IProductService
+	public class ProductService(IUnitOfWork unitOfWork) : IProductService
 	{
 		public async Task<List<ProductDto>> GetAllAsync()
 		{
@@ -79,7 +80,36 @@ namespace PCGalaxy.Server.Services
 				};
 		}
 
-		public async Task CreateAsync(ProductDto productDto)
+        public async Task<List<ProductDto>> SearchAsync(string searchTerm)
+        {
+            searchTerm = searchTerm?.Trim().ToLower() ?? "";
+
+            return await unitOfWork.ProductRepository
+                .GetByConditionAsync(p =>
+                    p.Name.ToLower().Contains(searchTerm) ||
+                    p.Description.ToLower().Contains(searchTerm) ||
+                    p.Specifications.ToLower().Contains(searchTerm))
+                .Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Specifications = p.Specifications,
+                    Price = p.Price,
+                    Stock = p.Stock,
+                    Supplier = p.Supplier,
+                    DeliveryMethod = p.DeliveryMethod,
+                    Category = new CategoryDto
+                    {
+                        Id = p.Category!.Id,
+                        Name = p.Category.Name
+                    },
+                    ImageBase64 = Convert.ToBase64String(p.Image)
+                })
+                .ToListAsync();
+        }
+
+        public async Task CreateAsync(ProductDto productDto)
 		{
 			var product = new Product
 			{

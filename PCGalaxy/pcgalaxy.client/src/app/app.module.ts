@@ -45,6 +45,7 @@ import { KeyboardsComponent } from './categories/keyboards/keyboards.component';
 import { MiceComponent } from './categories/mice/mice.component';
 import { MousePadsComponent } from './categories/mouse-pads/mouse-pads.component';
 import { HeadsetsComponent } from './categories/headsets/headsets.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { HeadsetsComponent } from './categories/headsets/headsets.component';
     KeyboardsComponent,
     MiceComponent,
     MousePadsComponent,
-    HeadsetsComponent
+    HeadsetsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

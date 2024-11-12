@@ -24,6 +24,10 @@ export class ProductsService {
     return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
   }
 
+  searchProducts(term: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/products/search`, { params: { term } });
+  }
+
   updateProduct(id: string, product: Product): Observable<Product> {
     return this.http.put<Product>(`${this.apiUrl}/products/${id}`, product, { withCredentials: true });
   }
