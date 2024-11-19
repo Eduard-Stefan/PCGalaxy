@@ -3,18 +3,19 @@
     <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>PCGalaxy</span>
-    <span class="spacer"></span>
-    <div class="search-container">
-      <button mat-icon-button class="search-button" (click)="onSearch()" [routerLink]="['/search']" [queryParams]="{ term: searchTerm }">
+    <img class="logo" src="pc-galaxy-logo.png"/>
+
+    <div class="search-wrapper">
+      <button mat-icon-button (click)="onSearch()" [routerLink]="['/search']" [queryParams]="{ term: searchTerm }">
         <mat-icon>search</mat-icon>
       </button>
-      <div class="search-wrapper">
-        <mat-form-field class="search-bar" appearance="outline">
-          <input matInput placeholder="Search..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
-        </mat-form-field>
-      </div>
+      <mat-form-field class="search-field" appearance="outline" subscriptSizing="dynamic">
+        <input matInput placeholder="Search..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+      </mat-form-field>
     </div>
+
+    <span class="spacer"></span>
+
     <span *ngIf="signedIn">Welcome, {{ currentUser?.firstName }}</span>
     <button mat-button *ngIf="!signedIn" routerLink="/register">Register</button>
     <button mat-button *ngIf="!signedIn" routerLink="/login">Login</button>
