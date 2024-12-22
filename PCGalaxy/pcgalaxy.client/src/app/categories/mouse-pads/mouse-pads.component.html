@@ -1,23 +1,98 @@
 <div class="component-container">
   <h1>Mouse Pads</h1>
-  <div class="product-container">
-    <div class="product-card" *ngFor="let product of products">
-      <img
-        [src]="'data:image/jpeg;base64,' + product.imageBase64"
-        class="product-image"
-      />
-      <div class="product-details">
-        <h3><a [routerLink]="['/product', product.id]" class="product-link">{{ product.name }}</a></h3>
-        <p>{{ product.price | currency }}</p>
-        <div class="button-container">
-          <button mat-icon-button (click)="addToCart(product)">
-            <mat-icon>shopping_cart</mat-icon>
-          </button>
-          <button mat-icon-button (click)="addToWishlist(product)">
-            <mat-icon>favorite</mat-icon>
-          </button>
-        </div>
+  <div class="filter-button-container">
+    <button mat-icon-button (click)="toggleFilterPanel()" [attr.aria-expanded]="filterPanelOpen">
+      <mat-icon>filter_alt</mat-icon>
+    </button>
+  </div>
+  <div class="filter-container-wrapper">
+    <div
+      class="filter-container"
+      [@filterPanelAnimation]="filterPanelOpen ? 'expanded' : 'collapsed'"
+    >
+      <h2>Filters</h2>
+      <div class="filter-section">
+        <mat-checkbox [(ngModel)]="filters.inStock">In Stock</mat-checkbox>
+      </div>
+      <div class="filter-section">
+        <mat-form-field appearance="fill">
+          <mat-label>Min Price</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="filters.minPrice"
+            placeholder="Min"
+            min="0"
+            max="1000000"
+            #minPriceInput="ngModel"
+          />
+          <mat-error *ngIf="minPriceInput.invalid && (minPriceInput.dirty || minPriceInput.touched)">
+            <ng-container *ngIf="minPriceInput.errors?.['min']">Price cannot be negative.</ng-container>
+            <ng-container *ngIf="minPriceInput.errors?.['max']">Price cannot exceed 1000000.</ng-container>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Max Price</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="filters.maxPrice"
+            placeholder="Max"
+            min="0"
+            max="1000000"
+            #maxPriceInput="ngModel"
+          />
+          <mat-error *ngIf="maxPriceInput.invalid && (maxPriceInput.dirty || maxPriceInput.touched)">
+            <ng-container *ngIf="maxPriceInput.errors?.['min']">Price cannot be negative.</ng-container>
+            <ng-container *ngIf="maxPriceInput.errors?.['max']">Price cannot exceed 1000000.</ng-container>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="filter-section">
+        <mat-form-field appearance="fill">
+          <mat-label>Supplier</mat-label>
+          <mat-select [(ngModel)]="filters.supplier">
+            <mat-option value="">All Suppliers</mat-option>
+            <mat-option *ngFor="let supplier of suppliers" [value]="supplier">{{ supplier }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Delivery Method</mat-label>
+          <mat-select [(ngModel)]="filters.deliveryMethod">
+            <mat-option value="">All Delivery Methods</mat-option>
+            <mat-option *ngFor="let method of deliveryMethods" [value]="method">{{ method }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-error *ngIf="isMinPriceGreaterThanMaxPrice()">Min price cannot be greater than max price.</mat-error>
+      <div class="filter-actions">
+        <button mat-raised-button [disabled]="!isFormValid()" (click)="applyFilters()">Apply</button>
+        <button mat-button (click)="resetFilters()">Reset Filters</button>
       </div>
     </div>
+  </div>
+  <div class="product-container">
+    <ng-container *ngIf="filteredProducts.length > 0; else noProductsTemplate">
+      <div class="product-card" *ngFor="let product of filteredProducts">
+        <img [src]="'data:image/jpeg;base64,' + product.imageBase64" class="product-image" />
+        <div class="product-details">
+          <h3>
+            <a [routerLink]="['/product', product.id]" class="product-link">{{ product.name }}</a>
+          </h3>
+          <p>{{ product.price | currency }}</p>
+          <div class="button-container">
+            <button mat-icon-button (click)="addToCart(product)">
+              <mat-icon>shopping_cart</mat-icon>
+            </button>
+            <button mat-icon-button (click)="addToWishlist(product)">
+              <mat-icon>favorite</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noProductsTemplate>
+      <p class="no-products-message">No products available.</p>
+    </ng-template>
   </div>
 </div>
