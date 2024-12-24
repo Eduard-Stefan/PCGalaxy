@@ -1,0 +1,30 @@
+<div class="component-container">
+  <h1>Wishlist</h1>
+  <div class="product-container">
+    <ng-container *ngIf="currentUser; else notLoggedIn">
+      <div class="message" *ngIf="wishlistItems.length === 0">
+        <p>Your wishlist is currently empty.</p>
+      </div>
+      <div class="product-card" *ngFor="let item of wishlistItems">
+        <img [src]="'data:image/jpeg;base64,' + item.product!.imageBase64" class="product-image" />
+        <div class="product-details">
+          <h3>
+            <a [routerLink]="['/product', item.product!.id]" class="product-link">{{ item.product!.name }}</a>
+          </h3>
+          <p>{{ item.product!.price | currency }}</p>
+        </div>
+        <div class="button-container">
+          <button mat-icon-button (click)="addToCart(item.product!)">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteWishlistItem(item.id!)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #notLoggedIn>
+      <p class="message">You must be logged in to view your wishlist.</p>
+    </ng-template>
+  </div>
+</div>

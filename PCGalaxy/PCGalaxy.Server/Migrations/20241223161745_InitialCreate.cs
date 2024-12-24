@@ -223,13 +223,38 @@ namespace PCGalaxy.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "WishlistItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WishlistItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WishlistItems_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WishlistItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "135c5426-3ee1-415b-873a-eca50b885a0f", null, "admin", "admin" },
-                    { "7a185eb1-9daa-4010-8869-1c885506afe4", null, "user", "user" }
+                    { "9e929bac-8c99-471f-ba9a-3b84e10b1c31", null, "admin", "admin" },
+                    { "fd80c356-676e-4bdf-8344-90617ff06419", null, "user", "user" }
                 });
 
             migrationBuilder.InsertData(
@@ -301,6 +326,16 @@ namespace PCGalaxy.Server.Migrations
                 name: "IX_UserProducts_UsersId",
                 table: "UserProducts",
                 column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WishlistItems_ProductId",
+                table: "WishlistItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WishlistItems_UserId",
+                table: "WishlistItems",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -323,6 +358,9 @@ namespace PCGalaxy.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserProducts");
+
+            migrationBuilder.DropTable(
+                name: "WishlistItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

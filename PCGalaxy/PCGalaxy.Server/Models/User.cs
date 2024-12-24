@@ -16,5 +16,6 @@ namespace PCGalaxy.Server.Models
 		public required string LastName { get; set; }
 
 		public ICollection<Product>? Products { get; set; }
+		public ICollection<WishlistItem>? WishlistItems { get; set; }
 	}
 }

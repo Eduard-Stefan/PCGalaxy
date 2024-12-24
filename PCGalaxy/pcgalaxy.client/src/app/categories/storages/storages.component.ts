@@ -8,6 +8,11 @@ import {
 } from '@angular/animations';
 import { Product } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
+import { WishlistItemsService } from '../../services/wishlist-items.service';
+import { AccountService } from '../../services/account.service';
+import { User } from '../../models/user.model';
+import { WishlistItem } from '../../models/wishlistItem.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-storages',
@@ -35,6 +40,7 @@ import { ProductsService } from '../../services/products.service';
   ],
 })
 export class StoragesComponent implements OnInit {
+  public currentUser: User | undefined;
   public products: Product[] = [];
   public filteredProducts: Product[] = [];
   public suppliers: string[] = [];
@@ -49,7 +55,12 @@ export class StoragesComponent implements OnInit {
 
   public filterPanelOpen = false;
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private wishlistItemsService: WishlistItemsService,
+    private accountService: AccountService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.getProductsByCategory(5);
@@ -126,10 +137,16 @@ export class StoragesComponent implements OnInit {
     if (this.isMinPriceGreaterThanMaxPrice()) {
       return false;
     }
-    if (this.filters.minPrice !== null && (this.filters.minPrice < 0 || this.filters.minPrice > 1000000)) {
+    if (
+      this.filters.minPrice !== null &&
+      (this.filters.minPrice < 0 || this.filters.minPrice > 1000000)
+    ) {
       return false;
     }
-    if (this.filters.maxPrice !== null && (this.filters.maxPrice < 0 || this.filters.maxPrice > 1000000)) {
+    if (
+      this.filters.maxPrice !== null &&
+      (this.filters.maxPrice < 0 || this.filters.maxPrice > 1000000)
+    ) {
       return false;
     }
     return true;
@@ -140,6 +157,45 @@ export class StoragesComponent implements OnInit {
   }
 
   addToWishlist(product: Product): void {
-    console.log('Product added to wishlist:', product);
+    this.accountService.getCurrentUser().subscribe({
+      next: (user: User) => {
+        this.currentUser = user;
+        if (this.currentUser?.id) {
+          this.wishlistItemsService.getWishlistItemsByUserId(this.currentUser.id).subscribe({
+            next: (wishlistItems: WishlistItem[]) => {
+              if (wishlistItems.some((item) => item.productId === product.id)) {
+                this.snackBar.open('Product already in wishlist', 'Close', {
+                  duration: 3000,
+                });
+                return;
+              }
+              this.wishlistItemsService.createWishlistItem({
+                id: undefined,
+                productId: product.id,
+                product: undefined,
+                userId: this.currentUser!.id
+              }).subscribe({
+                next: () => {
+                  this.snackBar.open('Product added to wishlist', 'Close', {
+                    duration: 3000,
+                  });
+                },
+                error: (err) => {
+                  console.error(err);
+                },
+              });
+            },
+            error: (err) => {
+              console.error(err);
+            },
+          });
+        }
+        else {
+          this.snackBar.open('You must be logged in to add products to your wishlist', 'Close', {
+            duration: 3000,
+          });
+        }
+      }
+    });
   }
 }

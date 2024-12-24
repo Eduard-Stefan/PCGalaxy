@@ -3,6 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 import { Product } from '../models/product.model';
 import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from '../models/user.model';
+import { WishlistItem } from '../models/wishlistItem.model';
+import { AccountService } from '../services/account.service';
+import { WishlistItemsService } from '../services/wishlist-items.service';
 
 @Component({
   selector: 'app-view-product',
@@ -10,12 +15,16 @@ import { Location } from '@angular/common';
   styleUrl: './view-product.component.css'
 })
 export class ViewProductComponent {
+  currentUser: User | undefined;
   product: Product | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService,
-    private location: Location
+    private location: Location,
+    private wishlistItemsService: WishlistItemsService,
+    private accountService: AccountService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +44,45 @@ export class ViewProductComponent {
   }
 
   addToWishlist(product: Product): void {
-    console.log('Product added to wishlist:', product);
+    this.accountService.getCurrentUser().subscribe({
+      next: (user: User) => {
+        this.currentUser = user;
+        if (this.currentUser?.id) {
+          this.wishlistItemsService.getWishlistItemsByUserId(this.currentUser.id).subscribe({
+            next: (wishlistItems: WishlistItem[]) => {
+              if (wishlistItems.some((item) => item.productId === product.id)) {
+                this.snackBar.open('Product already in wishlist', 'Close', {
+                  duration: 3000,
+                });
+                return;
+              }
+              this.wishlistItemsService.createWishlistItem({
+                id: undefined,
+                productId: product.id,
+                product: undefined,
+                userId: this.currentUser!.id
+              }).subscribe({
+                next: () => {
+                  this.snackBar.open('Product added to wishlist', 'Close', {
+                    duration: 3000,
+                  });
+                },
+                error: (err) => {
+                  console.error(err);
+                },
+              });
+            },
+            error: (err) => {
+              console.error(err);
+            },
+          });
+        }
+        else {
+          this.snackBar.open('You must be logged in to add products to your wishlist', 'Close', {
+            duration: 3000,
+          });
+        }
+      }
+    });
   }
 }

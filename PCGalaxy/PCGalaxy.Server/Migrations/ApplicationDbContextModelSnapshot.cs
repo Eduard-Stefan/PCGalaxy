@@ -17,7 +17,7 @@ namespace PCGalaxy.Server.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -51,13 +51,13 @@ namespace PCGalaxy.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "135c5426-3ee1-415b-873a-eca50b885a0f",
+                            Id = "9e929bac-8c99-471f-ba9a-3b84e10b1c31",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "7a185eb1-9daa-4010-8869-1c885506afe4",
+                            Id = "fd80c356-676e-4bdf-8344-90617ff06419",
                             Name = "user",
                             NormalizedName = "user"
                         });
@@ -390,6 +390,28 @@ namespace PCGalaxy.Server.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("PCGalaxy.Server.Models.WishlistItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("WishlistItems");
+                });
+
             modelBuilder.Entity("ProductUser", b =>
                 {
                     b.Property<Guid>("ProductsId")
@@ -467,6 +489,25 @@ namespace PCGalaxy.Server.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("PCGalaxy.Server.Models.WishlistItem", b =>
+                {
+                    b.HasOne("PCGalaxy.Server.Models.Product", "Product")
+                        .WithMany("WishlistItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PCGalaxy.Server.Models.User", "User")
+                        .WithMany("WishlistItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ProductUser", b =>
                 {
                     b.HasOne("PCGalaxy.Server.Models.Product", null)
@@ -485,6 +526,16 @@ namespace PCGalaxy.Server.Migrations
             modelBuilder.Entity("PCGalaxy.Server.Models.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("PCGalaxy.Server.Models.Product", b =>
+                {
+                    b.Navigation("WishlistItems");
+                });
+
+            modelBuilder.Entity("PCGalaxy.Server.Models.User", b =>
+                {
+                    b.Navigation("WishlistItems");
                 });
 #pragma warning restore 612, 618
         }

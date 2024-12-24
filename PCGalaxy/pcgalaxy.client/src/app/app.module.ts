@@ -47,6 +47,7 @@ import { MousePadsComponent } from './categories/mouse-pads/mouse-pads.component
 import { HeadsetsComponent } from './categories/headsets/headsets.component';
 import { SearchComponent } from './search/search.component';
 import { ViewProductComponent } from './view-product/view-product.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ViewProductComponent } from './view-product/view-product.component';
     MousePadsComponent,
     HeadsetsComponent,
     SearchComponent,
-    ViewProductComponent
+    ViewProductComponent,
+    WishlistComponent
   ],
   imports: [
     BrowserModule,
