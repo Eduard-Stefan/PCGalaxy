@@ -20,6 +20,10 @@
       <mat-icon>favorite</mat-icon>
     </button>
 
+    <button mat-icon-button routerLink="/cart">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+
     <span *ngIf="signedIn">Welcome, {{ currentUser?.firstName }}</span>
     <button mat-button *ngIf="!signedIn" routerLink="/register">Register</button>
     <button mat-button *ngIf="!signedIn" routerLink="/login">Login</button>

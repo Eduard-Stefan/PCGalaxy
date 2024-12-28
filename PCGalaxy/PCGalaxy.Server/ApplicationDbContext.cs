@@ -10,6 +10,7 @@ namespace PCGalaxy.Server
 		public required DbSet<Product> Products { get; set; }
 		public required DbSet<Category> Categories { get; set; }
 		public required DbSet<WishlistItem> WishlistItems { get; set; }
+		public required DbSet<CartItem> CartItems { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -49,6 +50,13 @@ namespace PCGalaxy.Server
 				entity.HasKey(w => w.Id);
 				entity.HasOne(w => w.Product).WithMany(p => p.WishlistItems).HasForeignKey(w => w.ProductId);
 				entity.HasOne(w => w.User).WithMany(u => u.WishlistItems).HasForeignKey(w => w.UserId);
+			});
+
+			modelBuilder.Entity<CartItem>(entity =>
+			{
+				entity.HasKey(c => c.Id);
+				entity.HasOne(c => c.Product).WithMany(p => p.CartItems).HasForeignKey(c => c.ProductId);
+				entity.HasOne(c => c.User).WithMany(u => u.CartItems).HasForeignKey(c => c.UserId);
 			});
 
 			var admin = new IdentityRole("admin")

@@ -23,6 +23,7 @@ import { HeadsetsComponent } from './categories/headsets/headsets.component';
 import { SearchComponent } from './search/search.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'not-authorized', component: NotAuthorizedComponent },
   { path: 'search', component: SearchComponent },
   { path: 'wishlist', component: WishlistComponent },
+  { path: 'cart', component: CartComponent }
 ];
 
 @NgModule({

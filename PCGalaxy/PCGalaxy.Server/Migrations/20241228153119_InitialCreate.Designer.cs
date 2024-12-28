@@ -12,7 +12,7 @@ using PCGalaxy.Server;
 namespace PCGalaxy.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241223161745_InitialCreate")]
+    [Migration("20241228153119_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace PCGalaxy.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9e929bac-8c99-471f-ba9a-3b84e10b1c31",
+                            Id = "331a34aa-775f-4b23-96a0-8bfd4d386ad6",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "fd80c356-676e-4bdf-8344-90617ff06419",
+                            Id = "4aea05e3-c231-4528-885d-5248fb10c7b2",
                             Name = "user",
                             NormalizedName = "user"
                         });
@@ -174,6 +174,28 @@ namespace PCGalaxy.Server.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("PCGalaxy.Server.Models.CartItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("PCGalaxy.Server.Models.Category", b =>
@@ -481,6 +503,25 @@ namespace PCGalaxy.Server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PCGalaxy.Server.Models.CartItem", b =>
+                {
+                    b.HasOne("PCGalaxy.Server.Models.Product", "Product")
+                        .WithMany("CartItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PCGalaxy.Server.Models.User", "User")
+                        .WithMany("CartItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PCGalaxy.Server.Models.Product", b =>
                 {
                     b.HasOne("PCGalaxy.Server.Models.Category", "Category")
@@ -533,11 +574,15 @@ namespace PCGalaxy.Server.Migrations
 
             modelBuilder.Entity("PCGalaxy.Server.Models.Product", b =>
                 {
+                    b.Navigation("CartItems");
+
                     b.Navigation("WishlistItems");
                 });
 
             modelBuilder.Entity("PCGalaxy.Server.Models.User", b =>
                 {
+                    b.Navigation("CartItems");
+
                     b.Navigation("WishlistItems");
                 });
 #pragma warning restore 612, 618

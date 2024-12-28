@@ -48,6 +48,7 @@ import { HeadsetsComponent } from './categories/headsets/headsets.component';
 import { SearchComponent } from './search/search.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     HeadsetsComponent,
     SearchComponent,
     ViewProductComponent,
-    WishlistComponent
+    WishlistComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

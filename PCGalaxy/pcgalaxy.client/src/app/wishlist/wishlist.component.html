@@ -3,13 +3,20 @@
   <div class="product-container">
     <ng-container *ngIf="currentUser; else notLoggedIn">
       <div class="message" *ngIf="wishlistItems.length === 0">
-        <p>Your wishlist is currently empty.</p>
+        <p>Your wishlist is empty.</p>
       </div>
       <div class="product-card" *ngFor="let item of wishlistItems">
-        <img [src]="'data:image/jpeg;base64,' + item.product!.imageBase64" class="product-image" />
+        <img
+          [src]="'data:image/jpeg;base64,' + item.product!.imageBase64"
+          class="product-image"
+        />
         <div class="product-details">
           <h3>
-            <a [routerLink]="['/product', item.product!.id]" class="product-link">{{ item.product!.name }}</a>
+            <a
+              [routerLink]="['/product', item.product!.id]"
+              class="product-link"
+              >{{ item.product!.name }}</a
+            >
           </h3>
           <p>{{ item.product!.price | currency }}</p>
         </div>

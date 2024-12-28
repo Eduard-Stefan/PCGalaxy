@@ -25,6 +25,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
 builder.Services.AddScoped<IWishlistItemService, WishlistItemService>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<ICartItemService, CartItemService>();
 
 builder.Services.AddControllers();
 

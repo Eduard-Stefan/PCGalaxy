@@ -44,5 +44,6 @@ namespace PCGalaxy.Server.Models
 		public required byte[] Image { get; set; }
 		public ICollection<User>? Users { get; set; }
 		public ICollection<WishlistItem>? WishlistItems { get; set; }
+		public ICollection<CartItem>? CartItems { get; set; }
 	}
 }

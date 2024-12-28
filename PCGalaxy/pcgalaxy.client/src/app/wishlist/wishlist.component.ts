@@ -4,7 +4,6 @@ import { WishlistItem } from '../models/wishlistItem.model';
 import { AccountService } from '../services/account.service';
 import { User } from '../models/user.model';
 import { Product } from '../models/product.model';
-import { ProductsService } from '../services/products.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -21,7 +20,6 @@ export class WishlistComponent implements OnInit {
   constructor(
     private wishlistItemsService: WishlistItemsService,
     private accountService: AccountService,
-    private productsService: ProductsService,
     private snackBar: MatSnackBar
   ) {}
 
