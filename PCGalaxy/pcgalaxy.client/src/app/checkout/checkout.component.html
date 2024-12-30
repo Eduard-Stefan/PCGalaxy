@@ -1,0 +1,152 @@
+<button mat-icon-button (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+<div class="checkout-container">
+  <h1>Checkout</h1>
+  <form (ngSubmit)="onSubmit()" #checkoutForm="ngForm" class="checkout-form">
+    <div class="form-section">
+      <h2>Delivery Address</h2>
+      <mat-form-field appearance="outline" class="narrow-field">
+        <mat-label>Delivery Address</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="deliveryAddress"
+          name="deliveryAddress"
+          required
+          rows="3"
+          placeholder="Enter your delivery address"
+          #deliveryAddressField="ngModel"
+        ></textarea>
+        <mat-error *ngIf="deliveryAddressField.errors?.['required']">
+          Delivery address is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-section">
+      <h2>Payment Details</h2>
+      <mat-form-field appearance="outline" class="fixed-field">
+        <mat-label>Card Number</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="cardNumber"
+          name="cardNumber"
+          maxlength="16"
+          minlength="16"
+          required
+          pattern="[0-9]{16}"
+          placeholder="1234567812345678"
+          #cardNumberField="ngModel"
+        />
+        <mat-error *ngIf="cardNumberField.errors?.['required']">
+          Card number is required.
+        </mat-error>
+        <mat-error
+          *ngIf="cardNumberField.errors?.['minlength'] || cardNumberField.errors?.['maxlength']"
+        >
+          Card number must be 16 digits.
+        </mat-error>
+        <mat-error *ngIf="cardNumberField.errors?.['pattern']">
+          Invalid card number format.
+        </mat-error>
+      </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="fixed-expiry">
+          <mat-label>Expiry Date</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="expiryDate"
+            name="expiryDate"
+            maxlength="5"
+            minlength="5"
+            required
+            pattern="(0[1-9]|1[0-2])\/[0-9]{2}"
+            placeholder="MM/YY"
+            (ngModelChange)="formatExpiryDate()"
+            #expiryDateField="ngModel"
+          />
+          <mat-error *ngIf="expiryDateField.errors?.['required']">
+            Expiry date is required.
+          </mat-error>
+          <mat-error *ngIf="expiryDateField.errors?.['pattern']">
+            Invalid expiry date format (MM/YY).
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fixed-cvv">
+          <mat-label>CVV</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="cvv"
+            name="cvv"
+            maxlength="3"
+            minlength="3"
+            required
+            pattern="[0-9]{3}"
+            placeholder="123"
+            #cvvField="ngModel"
+          />
+          <mat-error *ngIf="cvvField.errors?.['required']">
+            CVV is required.
+          </mat-error>
+          <mat-error
+            *ngIf="cvvField.errors?.['minlength'] || cvvField.errors?.['maxlength']"
+          >
+            CVV must be 3 digits.
+          </mat-error>
+          <mat-error *ngIf="cvvField.errors?.['pattern']">
+            Invalid CVV format.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-section">
+      <h2>Apply Coupon</h2>
+      <mat-form-field appearance="outline" class="narrow-field">
+        <mat-label>Coupon Code</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="couponCode"
+          name="couponCode"
+          placeholder="Enter coupon code"
+        />
+      </mat-form-field>
+      <div class="button-row">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="applyCoupon()"
+        >
+          Apply
+        </button>
+      </div>
+      <p
+        *ngIf="discountMessage"
+        [ngStyle]="{
+          color: discountMessage.includes('successfully') ? 'green' : 'red'
+        }"
+        class="message"
+      >
+        {{ discountMessage }}
+      </p>
+    </div>
+    <div class="form-section">
+      <h2>Order Summary</h2>
+      <div class="order-summary">
+        <p>Subtotal: ${{ subtotal }}</p>
+        <p>Discount: -${{ discount }}</p>
+        <p>Delivery Fee: ${{ deliveryFee }}</p>
+        <p>
+          <strong>Total: ${{ total }}</strong>
+        </p>
+      </div>
+      <br />
+      <button mat-raised-button type="submit" [disabled]="!checkoutForm.valid">
+        Confirm Order
+      </button>
+    </div>
+  </form>
+</div>

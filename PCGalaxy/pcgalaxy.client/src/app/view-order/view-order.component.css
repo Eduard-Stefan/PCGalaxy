@@ -1,0 +1,45 @@
+h1 {
+  text-align: center;
+  font-weight: normal;
+}
+
+.component-container {
+  padding: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  max-width: 20rem;
+  width: 100%;
+}
+
+.product-image {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-details h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.item-details p {
+  margin: 0.5rem 0;
+}

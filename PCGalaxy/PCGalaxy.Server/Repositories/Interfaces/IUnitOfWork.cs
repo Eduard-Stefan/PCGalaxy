@@ -6,5 +6,7 @@
 		ICategoryRepository CategoryRepository { get; }
 		IWishlistItemRepository WishlistItemRepository { get; }
 		ICartItemRepository CartItemRepository { get; }
+		IOrderItemRepository OrderItemRepository { get; }
+		IOrderRepository OrderRepository { get; }
 	}
 }

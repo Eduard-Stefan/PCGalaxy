@@ -24,6 +24,9 @@ import { SearchComponent } from './search/search.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { OrdersHistoryComponent } from './orders-history/orders-history.component';
+import { ViewOrderComponent } from './view-order/view-order.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -48,7 +51,10 @@ const routes: Routes = [
   { path: 'not-authorized', component: NotAuthorizedComponent },
   { path: 'search', component: SearchComponent },
   { path: 'wishlist', component: WishlistComponent },
-  { path: 'cart', component: CartComponent }
+  { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'orders-history', component: OrdersHistoryComponent },
+  { path: 'order/:id', component: ViewOrderComponent },
 ];
 
 @NgModule({

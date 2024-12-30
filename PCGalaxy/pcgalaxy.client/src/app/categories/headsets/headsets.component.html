@@ -81,7 +81,7 @@
           </h3>
           <p>{{ product.price | currency }}</p>
           <div class="button-container">
-            <button mat-icon-button (click)="addToCart(product)">
+            <button mat-icon-button [disabled]="product.stock <= 0" (click)="addToCart(product)">
               <mat-icon>shopping_cart</mat-icon>
             </button>
             <button mat-icon-button (click)="addToWishlist(product)">

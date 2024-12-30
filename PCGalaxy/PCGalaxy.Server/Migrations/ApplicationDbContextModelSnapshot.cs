@@ -51,13 +51,13 @@ namespace PCGalaxy.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "331a34aa-775f-4b23-96a0-8bfd4d386ad6",
+                            Id = "c452fab4-c632-4271-80fd-53af27e7b341",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "4aea05e3-c231-4528-885d-5248fb10c7b2",
+                            Id = "b0bc4228-a7cf-4912-89e8-f92b4624b4db",
                             Name = "user",
                             NormalizedName = "user"
                         });
@@ -283,6 +283,83 @@ namespace PCGalaxy.Server.Migrations
                             Id = 14,
                             Name = "Headset"
                         });
+                });
+
+            modelBuilder.Entity("PCGalaxy.Server.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CardCvv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardExpiryDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Coupon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliveryAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("DeliveryFee")
+                        .HasPrecision(9, 2)
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<decimal>("Discount")
+                        .HasPrecision(9, 2)
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasPrecision(9, 2)
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasPrecision(9, 2)
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("PCGalaxy.Server.Models.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("PCGalaxy.Server.Models.Product", b =>
@@ -519,6 +596,36 @@ namespace PCGalaxy.Server.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("PCGalaxy.Server.Models.Order", b =>
+                {
+                    b.HasOne("PCGalaxy.Server.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PCGalaxy.Server.Models.OrderItem", b =>
+                {
+                    b.HasOne("PCGalaxy.Server.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PCGalaxy.Server.Models.Product", "Product")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("PCGalaxy.Server.Models.Product", b =>
                 {
                     b.HasOne("PCGalaxy.Server.Models.Category", "Category")
@@ -569,9 +676,16 @@ namespace PCGalaxy.Server.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("PCGalaxy.Server.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
             modelBuilder.Entity("PCGalaxy.Server.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("OrderItems");
 
                     b.Navigation("WishlistItems");
                 });
@@ -579,6 +693,8 @@ namespace PCGalaxy.Server.Migrations
             modelBuilder.Entity("PCGalaxy.Server.Models.User", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("WishlistItems");
                 });

@@ -49,6 +49,9 @@ import { SearchComponent } from './search/search.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { OrdersHistoryComponent } from './orders-history/orders-history.component';
+import { ViewOrderComponent } from './view-order/view-order.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +81,10 @@ import { CartComponent } from './cart/cart.component';
     SearchComponent,
     ViewProductComponent,
     WishlistComponent,
-    CartComponent
+    CartComponent,
+    CheckoutComponent,
+    OrdersHistoryComponent,
+    ViewOrderComponent
   ],
   imports: [
     BrowserModule,

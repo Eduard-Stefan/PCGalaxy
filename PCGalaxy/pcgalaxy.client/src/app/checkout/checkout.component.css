@@ -1,0 +1,46 @@
+.checkout-container {
+  max-width: 18rem;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1,
+h2 {
+  text-align: center;
+  font-weight: normal;
+}
+
+.form-section {
+  margin-bottom: 4rem;
+}
+
+.fixed-field {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.fixed-expiry,
+.fixed-cvv {
+  width: 9rem;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.narrow-field {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.button-row {
+  text-align: center;
+}
+
+.order-summary p {
+  margin: 0.5rem 0;
+}

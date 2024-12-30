@@ -5,6 +5,8 @@ import { AccountService } from '../services/account.service';
 import { User } from '../models/user.model';
 import { Product } from '../models/product.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CartItem } from '../models/cartItem.model';
+import { CartItemsService } from '../services/cart-items.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -19,6 +21,7 @@ export class WishlistComponent implements OnInit {
 
   constructor(
     private wishlistItemsService: WishlistItemsService,
+    private cartItemsService: CartItemsService,
     private accountService: AccountService,
     private snackBar: MatSnackBar
   ) {}
@@ -60,6 +63,39 @@ export class WishlistComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    console.log('Product added to cart:', product);
+    this.accountService.getCurrentUser().subscribe({
+      next: (user: User) => {
+        this.currentUser = user;
+        if (this.currentUser?.id) {
+          this.cartItemsService.getCartItemsByUserId(this.currentUser.id).subscribe({
+            next: (cartItems: CartItem[]) => {
+              this.cartItemsService.createCartItem({
+                id: undefined,
+                productId: product.id,
+                product: undefined,
+                userId: this.currentUser!.id
+              }).subscribe({
+                next: () => {
+                  this.snackBar.open('Product added to cart', 'Close', {
+                    duration: 3000,
+                  });
+                },
+                error: (err) => {
+                  console.error(err);
+                },
+              });
+            },
+            error: (err) => {
+              console.error(err);
+            },
+          });
+        }
+        else {
+          this.snackBar.open('You must be logged in to add products to your cart', 'Close', {
+            duration: 3000,
+          });
+        }
+      }
+    });
   }
 }

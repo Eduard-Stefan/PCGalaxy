@@ -33,8 +33,12 @@ export class ViewProductComponent {
   ngOnInit(): void {
     const productId = String(this.route.snapshot.paramMap.get('id'));
     this.productsService.getProductById(productId).subscribe({
-      next: (product) => (this.product = product),
-      error: (err) => console.error(err),
+      next: (product) => {
+        this.product = product;
+      },
+      error: (err) => {
+        console.error(err);
+      }
     });
   }
 

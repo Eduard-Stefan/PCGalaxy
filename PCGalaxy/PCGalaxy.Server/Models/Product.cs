@@ -45,5 +45,6 @@ namespace PCGalaxy.Server.Models
 		public ICollection<User>? Users { get; set; }
 		public ICollection<WishlistItem>? WishlistItems { get; set; }
 		public ICollection<CartItem>? CartItems { get; set; }
+		public ICollection<OrderItem>? OrderItems { get; set; }
 	}
 }

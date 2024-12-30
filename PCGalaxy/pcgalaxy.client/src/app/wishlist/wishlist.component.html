@@ -21,7 +21,7 @@
           <p>{{ item.product!.price | currency }}</p>
         </div>
         <div class="button-container">
-          <button mat-icon-button (click)="addToCart(item.product!)">
+          <button mat-icon-button [disabled]="item.product!.stock <= 0" (click)="addToCart(item.product!)">
             <mat-icon>shopping_cart</mat-icon>
           </button>
           <button mat-icon-button (click)="deleteWishlistItem(item.id!)">

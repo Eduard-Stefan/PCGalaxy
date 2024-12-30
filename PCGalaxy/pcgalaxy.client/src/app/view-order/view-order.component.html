@@ -1,0 +1,22 @@
+<button mat-icon-button (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+<h1>Ordered Products</h1>
+<div class="component-container" *ngIf="order">
+  <div class="order-item" *ngFor="let orderItem of order.orderItems">
+    <img
+      [src]="'data:image/jpeg;base64,' + orderItem.product?.imageBase64"
+      class="product-image"
+    />
+    <div class="item-details">
+      <h3>
+        <a
+          [routerLink]="['/product', orderItem.product!.id]"
+          class="product-link"
+          >{{ orderItem.product!.name }}</a
+        >
+      </h3>
+      <p>Price: ${{ orderItem.product!.price }}</p>
+    </div>
+  </div>
+</div>

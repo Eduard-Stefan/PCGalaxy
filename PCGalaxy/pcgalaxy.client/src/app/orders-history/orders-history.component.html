@@ -1,0 +1,68 @@
+<div class="component-container">
+  <h1>Orders History</h1>
+  <div class="orders-container">
+    <ng-container *ngIf="currentUser; else notLoggedIn">
+      <div class="message" *ngIf="orders.length === 0">
+        <p>No orders found.</p>
+      </div>
+      <div *ngIf="orders.length">
+        <table
+          mat-table
+          [dataSource]="orders"
+          class="mat-elevation-z8 hoverable-table"
+        >
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.createdAt | date : "short" }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="deliveryAddress">
+            <th mat-header-cell *matHeaderCellDef>Delivery Address</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.deliveryAddress }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="coupon">
+            <th mat-header-cell *matHeaderCellDef>Coupon</th>
+            <td mat-cell *matCellDef="let order">{{ order.coupon }}</td>
+          </ng-container>
+          <ng-container matColumnDef="subtotal">
+            <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.subtotal | currency }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="discount">
+            <th mat-header-cell *matHeaderCellDef>Discount</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.discount | currency }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="deliveryFee">
+            <th mat-header-cell *matHeaderCellDef>Delivery Fee</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.deliveryFee | currency }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef>Total</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.total | currency }}
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let order; columns: displayedColumns"
+            [routerLink]="['/order', order.id]"
+            class="hoverable-row"
+          ></tr>
+        </table>
+      </div>
+    </ng-container>
+    <ng-template #notLoggedIn>
+      <p class="message">You must be logged in to view your orders history.</p>
+    </ng-template>
+  </div>
+</div>

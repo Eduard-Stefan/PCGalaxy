@@ -18,5 +18,6 @@ namespace PCGalaxy.Server.Models
 		public ICollection<Product>? Products { get; set; }
 		public ICollection<WishlistItem>? WishlistItems { get; set; }
 		public ICollection<CartItem>? CartItems { get; set; }
+		public ICollection<Order>? Orders { get; set; }
 	}
 }

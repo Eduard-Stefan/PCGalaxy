@@ -1,25 +1,56 @@
-<mat-icon (click)="goBack()" style="cursor: pointer;">arrow_back</mat-icon>
-<div *ngIf="product" class="product-details">
-    <h2>{{ product.name }}</h2>
-  
+<button mat-icon-button (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+<div class="product-container">
+  <div *ngIf="product" class="product-card">
     <div class="product-image">
-      <img [src]="'data:image/jpeg;base64,' + product.imageBase64" alt="{{ product.name }}" />
+      <img
+        [src]="'data:image/jpeg;base64,' + product.imageBase64"
+        alt="{{ product.name }}"
+      />
     </div>
-  
-    <div class="product-info">
-         <p><strong>Category:</strong> {{ product.category.name }}</p>
-         <p><strong>Description:</strong> {{ product.description }}</p>
-         <p><strong>Specifications:</strong> {{ product.specifications }}</p>
-         <p><strong>Supplier:</strong> {{ product.supplier }}</p>
-         <p><strong>Delivery Method:</strong> {{ product.deliveryMethod }}</p>
-         <p><strong>Price:</strong> ${{ product.price }}</p>
-         <p><strong>Stock:</strong> {{ product.stock }}</p>
-         <button mat-icon-button (click)="addToCart(product)">
-            <mat-icon>shopping_cart</mat-icon>
-          </button>
-          <button mat-icon-button (click)="addToWishlist(product)">
-            <mat-icon>favorite</mat-icon>
-          </button>
+    <div class="product-details">
+      <h2 class="product-title">{{ product.name }}</h2>
+      <br/>
+      <p class="product-category">
+        <strong>Category:</strong> {{ product.category.name }}
+      </p>
+      <p class="product-description">
+        <strong>Description:</strong> {{ product.description }}
+      </p>
+      <p class="product-specifications">
+        <strong>Specifications:</strong> {{ product.specifications }}
+      </p>
+      <p class="product-supplier">
+        <strong>Supplier:</strong> {{ product.supplier }}
+      </p>
+      <p class="product-delivery">
+        <strong>Delivery Method:</strong> {{ product.deliveryMethod }}
+      </p>
+      <p class="product-stock">
+        <strong>Status:</strong>
+        <span
+          [ngClass]="{
+            'in-stock': product.stock > 0,
+            'out-of-stock': product.stock <= 0
+          }"
+        >
+          {{ product.stock > 0 ? "In Stock" : "Out of Stock" }}
+        </span>
+      </p>
+      <p class="product-price"><strong>Price:</strong> ${{ product.price }}</p>
+      <div class="action-buttons">
+        <button
+          mat-icon-button
+          [disabled]="product.stock <= 0"
+          (click)="addToCart(product)"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+        <button mat-icon-button (click)="addToWishlist(product)">
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
-  
+</div>
