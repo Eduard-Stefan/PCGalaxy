@@ -1,8 +1,16 @@
-h1 {
-    text-align: center;
-    font-weight: normal;
+.home-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.component-container {
-    padding: 1rem;
+.home-banner {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

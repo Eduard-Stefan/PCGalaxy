@@ -52,6 +52,7 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrdersHistoryComponent } from './orders-history/orders-history.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { ViewOrderComponent } from './view-order/view-order.component';
     AppRoutingModule,
     MatCheckboxModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi())

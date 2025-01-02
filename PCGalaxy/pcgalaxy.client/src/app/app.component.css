@@ -31,7 +31,7 @@
 .example-toolbar {
   display: flex;
   align-items: center;
-  background: linear-gradient(45deg, #000000, #ffffff, #000000);
+  background: linear-gradient(45deg, #000000, #505050, #000000);
   background-size: 500% 500%;
   animation: animation 10s ease infinite;
   color: white;

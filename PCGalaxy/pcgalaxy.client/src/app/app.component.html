@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <img class="logo" src="pc-galaxy-logo.png"/>
+    <img class="logo" src="pc-galaxy-logo.png" />
 
     <div class="search-wrapper">
       <button mat-icon-button (click)="onSearch()" [routerLink]="['/search']" [queryParams]="{ term: searchTerm }">
@@ -28,7 +28,10 @@
       <mat-icon>shopping_cart</mat-icon>
     </button>
 
-    <span *ngIf="signedIn">Welcome, {{ currentUser?.firstName }}</span>
+    <button mat-icon-button *ngIf="signedIn" class="user-info" matTooltip="{{ currentUser?.firstName }}" matTooltipPosition="above">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
     <button mat-button *ngIf="!signedIn" routerLink="/register">Register</button>
     <button mat-button *ngIf="!signedIn" routerLink="/login">Login</button>
     <button mat-button *ngIf="signedIn" (click)="logout()">Logout</button>
