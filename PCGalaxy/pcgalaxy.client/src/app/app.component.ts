@@ -4,6 +4,9 @@ import { User } from './models/user.model';
 import { Router } from '@angular/router';
 import { ProductsService } from './services/products.service';
 import { Product } from './models/product.model';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -17,14 +20,77 @@ export class AppComponent implements OnInit {
 
   searchTerm: string = '';
   searchResults: Product[] = [];
+  searchSuggestions: string[] = [];
+  private searchTerms = new Subject<string>();
+  showSuggestions: boolean = false;
 
-  constructor(public accountService: AccountService, private router: Router, private productsService: ProductsService) {
+  constructor(
+    public accountService: AccountService,
+    private router: Router,
+    private productsService: ProductsService,
+    private sanitizer: DomSanitizer
+  ) {
     this.isSignedIn();
     this.getCurrentUser();
   }
 
   ngOnInit() {
     this.checkAdminRole();
+
+    this.searchTerms
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((term: string) => {
+          return term.length > 0
+            ? this.productsService.getSearchSuggestions(term)
+            : of([]);
+        })
+      )
+      .subscribe((suggestions) => {
+        this.searchSuggestions = suggestions;
+        this.showSuggestions =
+          suggestions.length > 0 || this.searchTerm.trim().length > 0;
+      });
+  }
+
+  highlightMatch(text: string): SafeHtml {
+    if (!this.searchTerm.trim()) {
+      return text;
+    }
+
+    const regex = new RegExp(
+      `(${this.escapeRegExp(this.searchTerm.trim())})`,
+      'gi'
+    );
+    const highlighted = text.replace(
+      regex,
+      '<strong style="color: #3f51b5;">$1</strong>'
+    );
+
+    return this.sanitizer.bypassSecurityTrustHtml(highlighted);
+  }
+
+  private escapeRegExp(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  search(term: string): void {
+    this.searchTerm = term;
+    this.searchTerms.next(term);
+  }
+
+  selectSuggestion(suggestion: string): void {
+    this.searchTerm = suggestion;
+    this.searchSuggestions = [];
+    this.showSuggestions = false;
+    this.onSearch();
+  }
+
+  onBlur(): void {
+    setTimeout(() => {
+      this.showSuggestions = false;
+    }, 200);
   }
 
   get currentUser() {
@@ -103,7 +169,11 @@ export class AppComponent implements OnInit {
 
   onSearch() {
     if (this.searchTerm.trim()) {
-      this.router.navigate(['/search'], { queryParams: { term: this.searchTerm } });
+      this.searchSuggestions = [];
+      this.showSuggestions = false;
+      this.router.navigate(['/search'], {
+        queryParams: { term: this.searchTerm },
+      });
     }
   }
 }

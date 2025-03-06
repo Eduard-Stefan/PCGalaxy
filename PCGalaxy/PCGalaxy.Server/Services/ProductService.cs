@@ -78,36 +78,44 @@ namespace PCGalaxy.Server.Services
 				.FirstOrDefaultAsync())!;
 		}
 
-        public async Task<List<ProductDto>> SearchAsync(string searchTerm)
-        {
-            searchTerm = searchTerm?.Trim().ToLower() ?? "";
+		public async Task<List<string>> GetProductSuggestionsAsync(string term)
+		{
+			return await unitOfWork.ProductRepository
+				.GetByConditionAsync(p => p.Name.ToLower().StartsWith(term.ToLower()))
+				.OrderBy(p => p.Name)
+				.Select(p => p.Name)
+				.Take(10)
+				.ToListAsync();
+		}
 
-            return await unitOfWork.ProductRepository
-                .GetByConditionAsync(p =>
-                    p.Name.ToLower().Contains(searchTerm) ||
-                    p.Description.ToLower().Contains(searchTerm) ||
-                    p.Specifications.ToLower().Contains(searchTerm))
-                .Select(p => new ProductDto
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Description = p.Description,
-                    Specifications = p.Specifications,
-                    Price = p.Price,
-                    Stock = p.Stock,
-                    Supplier = p.Supplier,
-                    DeliveryMethod = p.DeliveryMethod,
-                    Category = new CategoryDto
-                    {
-                        Id = p.Category!.Id,
-                        Name = p.Category.Name
-                    },
-                    ImageBase64 = Convert.ToBase64String(p.Image)
-                })
-                .ToListAsync();
-        }
+		public async Task<List<ProductDto>> SearchAsync(string searchTerm)
+		{
+			searchTerm = searchTerm?.Trim().ToLower() ?? "";
 
-        public async Task CreateAsync(ProductDto productDto)
+			return await unitOfWork.ProductRepository
+				.GetByConditionAsync(p =>
+					p.Name.ToLower().Contains(searchTerm))
+				.Select(p => new ProductDto
+				{
+					Id = p.Id,
+					Name = p.Name,
+					Description = p.Description,
+					Specifications = p.Specifications,
+					Price = p.Price,
+					Stock = p.Stock,
+					Supplier = p.Supplier,
+					DeliveryMethod = p.DeliveryMethod,
+					Category = new CategoryDto
+					{
+						Id = p.Category!.Id,
+						Name = p.Category.Name
+					},
+					ImageBase64 = Convert.ToBase64String(p.Image)
+				})
+				.ToListAsync();
+		}
+
+		public async Task CreateAsync(ProductDto productDto)
 		{
 			var product = new Product
 			{

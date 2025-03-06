@@ -24,6 +24,13 @@ export class ProductsService {
     return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
   }
 
+  getSearchSuggestions(term: string): Observable<string[]> {
+    if (!term.trim()) {
+      return new Observable<string[]>((observer) => observer.next([]));
+    }
+    return this.http.get<string[]>(`${this.apiUrl}/products/suggestions?term=${term}`);
+  }
+
   searchProducts(term: string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products/search`, { params: { term } });
   }

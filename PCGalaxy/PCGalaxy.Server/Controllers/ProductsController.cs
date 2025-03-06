@@ -38,12 +38,23 @@ namespace PCGalaxy.Server.Controllers
 		}
 
 		[HttpGet("search")]
-
         public async Task<ActionResult<List<ProductDto>>> Search([FromQuery] string term)
         {
             var products = await productService.SearchAsync(term);
             return Ok(products);
         }
+
+		[HttpGet("suggestions")]
+		public async Task<ActionResult<List<string>>> GetSearchSuggestions([FromQuery] string term)
+		{
+			if (string.IsNullOrWhiteSpace(term))
+			{
+				return BadRequest("Search term is required.");
+			}
+
+			var productNames = await productService.GetProductSuggestionsAsync(term);
+			return Ok(productNames);
+		}
 
 		[HttpPost]
 		public async Task<IActionResult> CreateAsync([FromBody, Required] ProductDto product)

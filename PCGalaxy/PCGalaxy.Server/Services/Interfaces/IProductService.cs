@@ -7,6 +7,7 @@ namespace PCGalaxy.Server.Services.Interfaces
 		Task<List<ProductDto>> GetAllAsync();
 		Task<List<ProductDto>> GetAllByCategoryAsync(int categoryId);
 		Task<ProductDto> GetByIdAsync(Guid id);
+		Task<List<string>> GetProductSuggestionsAsync(string term);
         Task<List<ProductDto>> SearchAsync(string searchTerm);
         Task CreateAsync(ProductDto product);
 		Task UpdateAsync(ProductDto product);

@@ -6,12 +6,45 @@
     <img class="logo" src="pc-galaxy-logo.png" />
 
     <div class="search-wrapper">
-      <button mat-icon-button (click)="onSearch()" [routerLink]="['/search']" [queryParams]="{ term: searchTerm }">
+      <button
+        mat-icon-button
+        (click)="onSearch()"
+        [routerLink]="['/search']"
+        [queryParams]="{ term: searchTerm }"
+      >
         <mat-icon>search</mat-icon>
       </button>
-      <mat-form-field class="search-field" appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="Search..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+      <mat-form-field
+        class="search-field"
+        appearance="outline"
+        subscriptSizing="dynamic"
+      >
+        <input
+          matInput
+          placeholder="Search..."
+          [(ngModel)]="searchTerm"
+          (keyup)="search(searchTerm)"
+          (keyup.enter)="onSearch()"
+          (blur)="onBlur()"
+        />
       </mat-form-field>
+      <div *ngIf="showSuggestions" class="suggestions-container">
+        <div
+          *ngFor="let suggestion of searchSuggestions; let i = index"
+          class="suggestion-item"
+          (click)="selectSuggestion(suggestion)"
+          [attr.data-index]="i"
+        >
+          <mat-icon class="suggestion-icon">search</mat-icon>
+          <span [innerHTML]="highlightMatch(suggestion)"></span>
+        </div>
+        <div
+          *ngIf="searchSuggestions.length === 0 && searchTerm.trim().length > 0"
+          class="no-results"
+        >
+          No matching products found
+        </div>
+      </div>
     </div>
 
     <span class="spacer"></span>
@@ -28,11 +61,19 @@
       <mat-icon>shopping_cart</mat-icon>
     </button>
 
-    <button mat-icon-button *ngIf="signedIn" class="user-info" matTooltip="{{ currentUser?.firstName }}" matTooltipPosition="above">
+    <button
+      mat-icon-button
+      *ngIf="signedIn"
+      class="user-info"
+      matTooltip="{{ currentUser?.firstName }}"
+      matTooltipPosition="above"
+    >
       <mat-icon>account_circle</mat-icon>
     </button>
 
-    <button mat-button *ngIf="!signedIn" routerLink="/register">Register</button>
+    <button mat-button *ngIf="!signedIn" routerLink="/register">
+      Register
+    </button>
     <button mat-button *ngIf="!signedIn" routerLink="/login">Login</button>
     <button mat-button *ngIf="signedIn" (click)="logout()">Logout</button>
   </mat-toolbar>
@@ -41,7 +82,9 @@
     <mat-sidenav class="sidenav" #sidenav mode="side" opened>
       <mat-nav-list>
         <a mat-list-item routerLink="/">Home</a>
-        <a *ngIf="isAdmin" mat-list-item routerLink="admin/products">Products</a>
+        <a *ngIf="isAdmin" mat-list-item routerLink="admin/products"
+          >Products</a
+        >
         <a mat-list-item routerLink="/motherboards">Motherboards</a>
         <a mat-list-item routerLink="/cpus">CPUs</a>
         <a mat-list-item routerLink="/gpus">GPUs</a>
