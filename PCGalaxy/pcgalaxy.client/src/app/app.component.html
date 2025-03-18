@@ -47,6 +47,30 @@
       </div>
     </div>
 
+    <div class="search-wrapper">
+      <button
+        mat-icon-button
+        (click)="onSearchSpec()"
+        [routerLink]="['/search-in-specs']"
+        [queryParams]="{ term: searchSpec }"
+      >
+        <mat-icon>find_in_page</mat-icon>
+      </button>
+      <mat-form-field
+        class="search-field"
+        appearance="outline"
+        subscriptSizing="dynamic"
+      >
+        <input
+          matInput
+          placeholder="Search in specs..."
+          [(ngModel)]="searchSpec"
+          (keyup.enter)="onSearchSpec()"
+          (blur)="onBlur()"
+        />
+      </mat-form-field>
+    </div>
+
     <span class="spacer"></span>
 
     <button mat-icon-button routerLink="/orders-history">

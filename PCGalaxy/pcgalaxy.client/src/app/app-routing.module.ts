@@ -27,6 +27,7 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrdersHistoryComponent } from './orders-history/orders-history.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
+import { SearchInSpecsComponent } from './search-in-specs/search-in-specs.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'not-authorized', component: NotAuthorizedComponent },
   { path: 'search', component: SearchComponent },
+  { path: 'search-in-specs', component: SearchInSpecsComponent },
   { path: 'wishlist', component: WishlistComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },

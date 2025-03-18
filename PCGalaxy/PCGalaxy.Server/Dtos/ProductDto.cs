@@ -41,5 +41,6 @@ namespace PCGalaxy.Server.Dtos
 
 		public required CategoryDto Category { get; set; }
 		public required string ImageBase64 { get; set; }
+		public required string SpecificationsFileBase64 { get; set; }
 	}
 }

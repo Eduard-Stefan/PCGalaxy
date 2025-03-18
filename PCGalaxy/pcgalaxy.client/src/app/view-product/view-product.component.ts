@@ -19,6 +19,7 @@ import { CartItem } from '../models/cartItem.model';
 export class ViewProductComponent {
   currentUser: User | undefined;
   product: Product | null = null;
+  decodedSpecificationsFile: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +36,14 @@ export class ViewProductComponent {
     this.productsService.getProductById(productId).subscribe({
       next: (product) => {
         this.product = product;
+        if (product.specificationsFileBase64) {
+          try {
+            this.decodedSpecificationsFile = atob(product.specificationsFileBase64);
+          } catch (error) {
+            console.error('Failed to decode specifications file:', error);
+            this.decodedSpecificationsFile = 'Unable to display specifications file content.';
+          }
+        }
       },
       error: (err) => {
         console.error(err);

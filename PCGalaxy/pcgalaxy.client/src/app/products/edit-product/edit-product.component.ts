@@ -23,6 +23,7 @@ export class EditProductComponent implements OnInit {
   public category: Category;
   public categories: Category[] = [];
   public imageBase64: string = '';
+  specificationsFileBase64: string = '';
   defaultProductImageBase64: string = environment.defaultProductImageBase64;
 
   constructor(
@@ -41,6 +42,7 @@ export class EditProductComponent implements OnInit {
     this.deliveryMethod = data.deliveryMethod;
     this.category = data.category;
     this.imageBase64 = data.imageBase64;
+    this.specificationsFileBase64 = data.specificationsFileBase64;
   }
 
   ngOnInit(): void {
@@ -79,7 +81,8 @@ export class EditProductComponent implements OnInit {
       supplier: trimmedSupplier,
       deliveryMethod: trimmedDeliveryMethod,
       category: this.category,
-      imageBase64: this.imageBase64 || this.defaultProductImageBase64
+      imageBase64: this.imageBase64 || this.defaultProductImageBase64,
+      specificationsFileBase64: this.specificationsFileBase64,
     };
 
     this.productsService.updateProduct(this.id, product).subscribe({
@@ -92,7 +95,7 @@ export class EditProductComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: Event): void {
+  onImageSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
@@ -106,16 +109,42 @@ export class EditProductComponent implements OnInit {
     }
   }
 
+  onSpecificationsFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        const base64ContentArray = base64String.split(',');
+        this.specificationsFileBase64 = base64ContentArray.length > 1 ? base64ContentArray[1] : base64String;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   removeImage(): void {
     this.imageBase64 = '';
+  }
+
+  removeSpecificationsFile(): void {
+    this.specificationsFileBase64 = '';
   }
 
   isNoImage(): boolean {
     return this.imageBase64.length === 0 || this.imageBase64 === this.defaultProductImageBase64;
   }
 
+  isNoSpecificationsFile(): boolean {
+    return this.specificationsFileBase64.length === 0;
+  }
+
   isImageTooLarge(): boolean {
     return this.imageBase64.length > 1024 * 1024;
+  }
+
+  isSpecificationsFileTooLarge(): boolean {
+    return this.specificationsFileBase64.length > 1024 * 1024;
   }
 
   isNameWhitespace(): boolean {

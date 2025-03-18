@@ -15,6 +15,7 @@ import { WishlistItem } from '../../models/wishlistItem.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CartItem } from '../../models/cartItem.model';
 import { CartItemsService } from '../../services/cart-items.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-headsets',
@@ -56,17 +57,20 @@ export class HeadsetsComponent implements OnInit {
   };
 
   public filterPanelOpen = false;
+  public searchSpec: string = '';
+  public categoryId: number = 14;
 
   constructor(
     private productsService: ProductsService,
     private wishlistItemsService: WishlistItemsService,
     private cartItemsService: CartItemsService,
     private accountService: AccountService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getProductsByCategory(14);
+    this.getProductsByCategory(this.categoryId);
   }
 
   getProductsByCategory(categoryId: number): void {
@@ -233,5 +237,13 @@ export class HeadsetsComponent implements OnInit {
         }
       }
     });
+  }
+
+  onSearchSpec(): void {
+    if (this.searchSpec.trim()) {
+      this.router.navigate(['/search-in-specs'], {
+        queryParams: { term: this.searchSpec, categoryId: this.categoryId },
+      });
+    }
   }
 }

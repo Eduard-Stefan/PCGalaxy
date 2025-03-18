@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   searchSuggestions: string[] = [];
   private searchTerms = new Subject<string>();
   showSuggestions: boolean = false;
+  searchSpec: string = '';
 
   constructor(
     public accountService: AccountService,
@@ -173,6 +174,14 @@ export class AppComponent implements OnInit {
       this.showSuggestions = false;
       this.router.navigate(['/search'], {
         queryParams: { term: this.searchTerm },
+      });
+    }
+  }
+
+  onSearchSpec() {
+    if (this.searchSpec.trim()) {
+      this.router.navigate(['/search-in-specs'], {
+        queryParams: { term: this.searchSpec },
       });
     }
   }

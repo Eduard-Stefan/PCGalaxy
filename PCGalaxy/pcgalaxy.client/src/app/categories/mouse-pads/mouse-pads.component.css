@@ -8,14 +8,23 @@ h1 {
   position: relative;
 }
 
-.filter-button-container {
-  text-align: left;
-  margin: 0.5rem 0;
+.buttons-container {
   display: flex;
-  justify-content: flex-start;
+  gap: 1rem;
+  align-items: center;
 }
 
+.filter-button-container,
+.search-button-container {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+
 .filter-container-wrapper {
+  margin-top: 1rem;
   position: relative;
 }
 

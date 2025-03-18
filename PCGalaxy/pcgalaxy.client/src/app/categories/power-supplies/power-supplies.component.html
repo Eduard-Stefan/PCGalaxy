@@ -1,9 +1,32 @@
 <div class="component-container">
   <h1>Power Supplies</h1>
-  <div class="filter-button-container">
-    <button mat-icon-button (click)="toggleFilterPanel()" [attr.aria-expanded]="filterPanelOpen">
-      <mat-icon>filter_alt</mat-icon>
-    </button>
+  <div class="buttons-container">
+    <div class="filter-button-container">
+      <button mat-icon-button (click)="toggleFilterPanel()" [attr.aria-expanded]="filterPanelOpen">
+        <mat-icon>filter_alt</mat-icon>
+      </button>
+    </div>
+    <div class="search-button-container">
+      <button
+        mat-icon-button
+        (click)="onSearchSpec()"
+        [routerLink]="['/search-in-specs']"
+        [queryParams]="{ term: searchSpec }"
+      >
+        <mat-icon>find_in_page</mat-icon>
+      </button>
+      <mat-form-field
+        class="search-field"
+        subscriptSizing="dynamic"
+      >
+        <input
+          matInput
+          placeholder="Search in specs..."
+          [(ngModel)]="searchSpec"
+          (keyup.enter)="onSearchSpec()"
+        />
+      </mat-form-field>
+    </div>
   </div>
   <div class="filter-container-wrapper">
     <div

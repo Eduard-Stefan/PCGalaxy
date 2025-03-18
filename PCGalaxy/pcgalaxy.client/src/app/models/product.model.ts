@@ -11,4 +11,5 @@ export interface Product {
   deliveryMethod: string;
   category: Category;
   imageBase64: string;
+  specificationsFileBase64: string;
 }

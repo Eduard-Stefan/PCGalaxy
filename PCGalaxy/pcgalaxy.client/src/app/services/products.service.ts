@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { Product } from "../models/product.model";
+import { ProductSearchResult } from "../models/productSearchResult.model";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class ProductsService {
       return new Observable<string[]>((observer) => observer.next([]));
     }
     return this.http.get<string[]>(`${this.apiUrl}/products/suggestions?term=${term}`);
+  }
+
+  searchInSpecs(query: string, categoryId?: number, ascending: boolean = false): Observable<ProductSearchResult[]> {
+    const params: any = { query, ascending };
+    if (categoryId !== undefined) {
+      params.categoryId = categoryId;
+    }
+    return this.http.get<ProductSearchResult[]>(`${this.apiUrl}/products/search-in-specs`, { params });
   }
 
   searchProducts(term: string): Observable<Product[]> {

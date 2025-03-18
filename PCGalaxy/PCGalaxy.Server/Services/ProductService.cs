@@ -27,7 +27,8 @@ namespace PCGalaxy.Server.Services
 						Id = p.Category!.Id,
 						Name = p.Category.Name
 					},
-					ImageBase64 = Convert.ToBase64String(p.Image)
+					ImageBase64 = Convert.ToBase64String(p.Image),
+					SpecificationsFileBase64 = Convert.ToBase64String(p.SpecificationsFile)
 				})
 				.ToListAsync();
 		}
@@ -50,7 +51,8 @@ namespace PCGalaxy.Server.Services
 						Id = p.Category!.Id,
 						Name = p.Category.Name
 					},
-					ImageBase64 = Convert.ToBase64String(p.Image)
+					ImageBase64 = Convert.ToBase64String(p.Image),
+					SpecificationsFileBase64 = Convert.ToBase64String(p.SpecificationsFile)
 				})
 				.ToListAsync();
 		}
@@ -73,7 +75,8 @@ namespace PCGalaxy.Server.Services
 						Id = p.Category!.Id,
 						Name = p.Category.Name
 					},
-					ImageBase64 = Convert.ToBase64String(p.Image)
+					ImageBase64 = Convert.ToBase64String(p.Image),
+					SpecificationsFileBase64 = Convert.ToBase64String(p.SpecificationsFile)
 				})
 				.FirstOrDefaultAsync())!;
 		}
@@ -110,7 +113,8 @@ namespace PCGalaxy.Server.Services
 						Id = p.Category!.Id,
 						Name = p.Category.Name
 					},
-					ImageBase64 = Convert.ToBase64String(p.Image)
+					ImageBase64 = Convert.ToBase64String(p.Image),
+					SpecificationsFileBase64 = Convert.ToBase64String(p.SpecificationsFile)
 				})
 				.ToListAsync();
 		}
@@ -128,7 +132,8 @@ namespace PCGalaxy.Server.Services
 				Supplier = productDto.Supplier,
 				DeliveryMethod = productDto.DeliveryMethod,
 				CategoryId = productDto.Category.Id,
-				Image = Convert.FromBase64String(productDto.ImageBase64)
+				Image = Convert.FromBase64String(productDto.ImageBase64),
+				SpecificationsFile = Convert.FromBase64String(productDto.SpecificationsFileBase64)
 			};
 			await unitOfWork.ProductRepository.CreateAsync(product);
 		}
@@ -146,7 +151,8 @@ namespace PCGalaxy.Server.Services
 				Supplier = productDto.Supplier,
 				DeliveryMethod = productDto.DeliveryMethod,
 				CategoryId = productDto.Category.Id,
-				Image = Convert.FromBase64String(productDto.ImageBase64)
+				Image = Convert.FromBase64String(productDto.ImageBase64),
+				SpecificationsFile = Convert.FromBase64String(productDto.SpecificationsFileBase64)
 			};
 			await unitOfWork.ProductRepository.UpdateAsync(product);
 		}

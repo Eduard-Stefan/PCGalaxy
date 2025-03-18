@@ -44,7 +44,8 @@ namespace PCGalaxy.Server.Services
 							Id = w.Product.Category!.Id,
 							Name = w.Product.Category.Name
 						},
-						ImageBase64 = Convert.ToBase64String(w.Product.Image)
+						ImageBase64 = Convert.ToBase64String(w.Product.Image),
+						SpecificationsFileBase64 = Convert.ToBase64String(w.Product.SpecificationsFile)
 					},
 					UserId = w.UserId,
 				})

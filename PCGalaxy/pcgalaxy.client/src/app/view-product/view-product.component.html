@@ -11,7 +11,7 @@
     </div>
     <div class="product-details">
       <h2 class="product-title">{{ product.name }}</h2>
-      <br/>
+      <br />
       <p class="product-category">
         <strong>Category:</strong> {{ product.category.name }}
       </p>
@@ -21,6 +21,12 @@
       <p class="product-specifications">
         <strong>Specifications:</strong> {{ product.specifications }}
       </p>
+      <div class="product-specifications-file">
+        <strong>Specifications File:</strong>
+        <div class="specifications-content" *ngIf="decodedSpecificationsFile">
+          {{ decodedSpecificationsFile }}
+        </div>
+      </div>
       <p class="product-supplier">
         <strong>Supplier:</strong> {{ product.supplier }}
       </p>

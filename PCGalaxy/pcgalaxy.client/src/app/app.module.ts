@@ -53,6 +53,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { OrdersHistoryComponent } from './orders-history/orders-history.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SearchInSpecsComponent } from './search-in-specs/search-in-specs.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CartComponent,
     CheckoutComponent,
     OrdersHistoryComponent,
-    ViewOrderComponent
+    ViewOrderComponent,
+    SearchInSpecsComponent
   ],
   imports: [
     BrowserModule,
